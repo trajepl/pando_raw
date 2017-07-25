@@ -1,4 +1,4 @@
-# Survey:emantic Similarity from Natural Language and Ontology analysis
+# Survey: semantic Similarity from Natural Language and Ontology analysis
 ---
 
 
