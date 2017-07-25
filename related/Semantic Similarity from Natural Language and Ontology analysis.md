@@ -10,14 +10,13 @@ Notes:
         - *Semantic similarity*: subset of the notion of semantic relatedness only considering taxonomic relationships in the evaluation of the semantic interaction between two elements.
         - *Semantic relatedness*: the strength of the semantic interactions between two elements with no restrictions on the types of the semantic links considered.
         - Knowledge graph
-            - ![][1]
-
+            ![related vocabulary][1]
 - Research status
-    - ![][2]
+    ![research status][2]
 
 English expression:
 
 
 
-[1]: /fig/related-vocabulary.png "related vocabulary"
-[2]: /fig/research-status.png "research status"
+[1]: https://github.com/trajepl/pando/blob/master/related/fig/related-vocabulary.png?raw=true "related vocabulary"
+[2]: https://github.com/trajepl/pando/blob/master/related/fig/research-status.png?raw=true "research status"
