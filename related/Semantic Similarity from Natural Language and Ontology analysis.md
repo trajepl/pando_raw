@@ -2,7 +2,7 @@
 ---
 
 
-Notes:
+### Notes:
 - Definitions of semantic measures and related vocabulary
     - Definitons of semantic measures
         - *Semantic measures* are mathematical tools used to estimate the strength of the semantic relationship between units of language, concepts or instances, through a (numerical) description obtained according to the comparison of information supporting their meaning.
@@ -14,9 +14,18 @@ Notes:
 - Research status
     ![research status][2]
 
-English expression:
 
+- Methods:
+    - corpus-based process
+        ![corpus-based process][3]
+
+English expression:
+- is not considered to be the root of sth.
+- to stress the point
+- for the sake of clarity
+- 
 
 
 [1]: https://github.com/trajepl/pando/blob/master/related/fig/related-vocabulary.png?raw=true "related vocabulary"
 [2]: https://github.com/trajepl/pando/blob/master/related/fig/research-status.png?raw=true "research status"
+[3]: https://github.com/trajepl/pando/blob/master/related/fig/corpus-based-process.png?raw=true "General process commonly adopted for the definition of corpus-based semantic measures"
