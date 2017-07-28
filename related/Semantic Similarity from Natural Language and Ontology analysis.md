@@ -22,9 +22,9 @@
         strongly depending on the qulitity of ontologies.
         - Measures adapted to semantic graphs composed of (multiple) predicate(s) which potentially induce cycles.
             - Measures based on graph traversal.
-                1 shortest path
-                2 random-walk
-                3 other interconnection measures
+                1. shortest path
+                2. random-walk
+                3. other interconnection measures
             - Measures based on graph property model.
         - Measures adapted to taxonomies, i.e., acyclic semantic graphs composed of a unique predicate inducing transitivity.
 
