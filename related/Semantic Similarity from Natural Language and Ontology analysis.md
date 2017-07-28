@@ -18,12 +18,25 @@
 - Methods:
     - corpus-based process
         ![corpus-based process][3]
+    - knowledge-based process
+        strongly depending on the qulitity of ontologies.
+        - Measures adapted to semantic graphs composed of (multiple) predicate(s) which potentially induce cycles.
+            - Measures based on graph traversal.
+                1 shortest path
+                2 random-walk
+                3 other interconnection measures
+            - Measures based on graph property model.
+        - Measures adapted to taxonomies, i.e., acyclic semantic graphs composed of a unique predicate inducing transitivity.
+
+
+- Reference
+    - Euzenat and Shvaiko, 2013
+    
 
 English expression:
 - is not considered to be the root of sth.
 - to stress the point
 - for the sake of clarity
-- 
 
 
 [1]: https://github.com/trajepl/pando/blob/master/related/fig/related-vocabulary.png?raw=true "related vocabulary"
