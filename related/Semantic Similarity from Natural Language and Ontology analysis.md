@@ -31,12 +31,13 @@
 
 - Reference
     - Euzenat and Shvaiko, 2013
-    
 
 English expression:
 - is not considered to be the root of sth.
 - to stress the point
 - for the sake of clarity
+
+- ISWC
 
 
 [1]: https://github.com/trajepl/pando/blob/master/related/fig/related-vocabulary.png?raw=true "related vocabulary"
