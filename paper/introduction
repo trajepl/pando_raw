@@ -1,0 +1,15 @@
+applications of semantic relatednes: 
+    natural language processing (NLP), word sense disambiguation , 
+    synonym detection, named entities recognition, semantic relations extraction, question answering systems 
+
+linguistically structured (e.g. WordNet) and collaboratively developed knowledge bases (e.g.Wikipedia), among others.
+
+The dimensions of the proposed framework cover three main aspects of SR approaches including the resources they rely on, 
+the computational methods applied on the resources for developing a relatedness metric, and the evaluation models that 
+are used for measuring their effectiveness.(Agirre et al., 2009; Chen et al., 2009),
+
+Formally speaking, semantic relatedness (SR) is defined as a form of semantic or functional associations between two words
+rather than just lexical relations such as synonymy and hyponymy (Budan & Graeme, 2006).
+
+the 14 selected methods utilize a wide range of knowledge resources that have been proposed for SR calculation such as 
+Wikipedia, Web search engines, ontologies and Wiktionary, to name a few. 

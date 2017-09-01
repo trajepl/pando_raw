@@ -3,7 +3,7 @@
 - [x] [Survey:Semantic Similarity from Natural Language and Ontology analysis](https://arxiv.org/pdf/1704.05295.pdf)
 - [ ] [Computing semantic relatedness using Wikipedia features](http://www.sciencedirect.com/science/article/pii/S0950705113001913#b0250)
 - [ ] [SISR: System for integrating semantic relatedness and similarity measures](https://link.springer.com/article/10.1007/s00500-016-2438-x)
-- [ ] [The state of the art in semantic relatedness: a framework for comparison](https://www.cambridge.org/core/journals/knowledge-engineering-review/article/state-of-the-art-in-semantic-relatedness-a-framework-for-comparison/E0D1367644F574601C6E6A47BDFC6AE9)
+- [ ] [The state of the art in semantic relatedness: a framework for comparison](http://ls3.rnet.ryerson.ca/wiki/images/2/28/State_of_the_art_in_semantic_relatedness_a_framework_for_comparison.pdf)
 - [ ] [semantic similarity:wikipedia](https://en.wikipedia.org/wiki/Semantic_similarity#cite_note-53)
 
 - [ ] [Comparing Semantic Relatedness between Word Pairs in Portuguese Using Wikipedia](http://download.springer.com/static/pdf/430/chp%253A10.1007%252F978-3-319-09761-9_17.pdf?originUrl=https%3A%2F%2Flink.springer.com%2Fchapter%2F10.1007%2F978-3-319-09761-9_17&token2=exp=1503986211~acl=%2Fstatic%2Fpdf%2F430%2Fchp%25253A10.1007%25252F978-3-319-09761-9_17.pdf%3ForiginUrl%3Dhttps%253A%252F%252Flink.springer.com%252Fchapter%252F10.1007%252F978-3-319-09761-9_17*~hmac=76538ff746aead9dcf2e2ca14f24603838f11cf2158cb77698875570a9aabb95)
@@ -11,3 +11,4 @@
 - [ ] [An Effective, Low-Cost Measure of Semantic Relatedness Obtained from Wikipedia Links](https://www.aaai.org/Papers/Workshops/2008/WS-08-15/WS08-15-005.pdf)
 - [ ] [Semantic Relatedness Using Salient Semantic Analysis](https://pdfs.semanticscholar.org/4e9c/459390caef1eb116c1f2fcbe7e79717f2964.pdf)
 - [ ] [WikiWalk: Random walks on Wikipedia for Semantic Relatedness](https://nlp.stanford.edu/pubs/wikiwalk-textgraphs09.pdf)
+- [ ] [Lexical Semantic Relatedness and Its Application in Natural Language Processing](ftp://ftp.cs.toronto.edu/pub/gh/Budanitsky-99.pdf   )
