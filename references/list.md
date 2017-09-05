@@ -1,6 +1,10 @@
 - [x] [Taxonomy-based information content and wordnet-wiktionary-wikipedia glosses for semantic relatedness](http://download.springer.com/static/pdf/431/art%253A10.1007%252Fs10489-015-0755-x.pdf?originUrl=https%3A%2F%2Flink.springer.com%2Farticle%2F10.1007%2Fs10489-015-0755-x&token2=exp=1500453538~acl=%2Fstatic%2Fpdf%2F431%2Fart%25253A10.1007%25252Fs10489-015-0755-x.pdf%3ForiginUrl%3Dhttps%253A%252F%252Flink.springer.com%252Farticle%252F10.1007%252Fs10489-015-0755-x*~hmac=80d116c2ae9be63a560abac6d9766ec4db66b9b01b570c368c331d4712e87912)
 - [x] [Evaluating WordNet-based Measures of Lexical Semantic Relatedness](http://disi.unitn.it/~p2p/RelatedWork/Matching/Budanitsky+Hirst-2006.pdf)
 - [x] [Survey:Semantic Similarity from Natural Language and Ontology analysis](https://arxiv.org/pdf/1704.05295.pdf)
+- [x] [REWOrD: Semantic Relatedness in the Web of Data]()
+- [ ] [WikiWalk: Random walks on Wikipedia for Semantic Relatedness](https://nlp.stanford.edu/pubs/wikiwalk-textgraphs09.pdf)
+- [ ] [Lexical Semantic Relatedness with Random Graph Walks](https://nlp.stanford.edu/pubs/Hughes-Ramage-EMNLP2007.pdf)
+
 - [ ] [Computing semantic relatedness using Wikipedia features](http://www.sciencedirect.com/science/article/pii/S0950705113001913#b0250)
 - [ ] [SISR: System for integrating semantic relatedness and similarity measures](https://link.springer.com/article/10.1007/s00500-016-2438-x)
 - [ ] [The state of the art in semantic relatedness: a framework for comparison](http://ls3.rnet.ryerson.ca/wiki/images/2/28/State_of_the_art_in_semantic_relatedness_a_framework_for_comparison.pdf)
