@@ -1,0 +1,6 @@
+SELECT ?property ?hasValue ?isValueOf
+WHERE {
+  { <http://dbpedia.org/resource/Taylor_Swift> ?property ?hasValue }
+  UNION
+  { ?isValueOf ?property <http://dbpedia.org/resource/Taylor_Swift> }
+}
