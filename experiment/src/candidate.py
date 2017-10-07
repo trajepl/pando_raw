@@ -5,6 +5,12 @@ import json
 uripath = 'uri'
 
 def travel(dirpath):
+    """
+    Parameters:
+        param1 - root path of json file
+    Return:
+        null
+    """
     for name in os.listdir(dirpath):
         filepath1 = os.path.join(dirpath, name)
         uripath1 = os.path.join(uripath, name)
@@ -25,12 +31,22 @@ def travel(dirpath):
                     
                 extract(uri_dict, uripath3)
 
-def extract(dict, filepath):
+def extract(uri_dict, filepath):
+    """
+    Parameters:
+        param1 - dictory of json loads
+        param2 - target file path
+    Return:
+        null
+    """
     with open(filepath, 'w') as out:
-        for ret in dict['results']:
+        for ret in uri_dict['results']:
             out.write(ret['uri'] + '\n')
 
 def run():
+    """
+    function main
+    """
     tmp_file = 'tmp'
     travel(tmp_file)
 
