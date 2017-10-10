@@ -60,6 +60,7 @@ def gen_ret(fn, dict):
     text = json.dumps(dict)
     with open(fn, 'w') as out:
         out.write(text)
+    print(fn)
     
 def run():
     """
