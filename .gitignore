@@ -4,5 +4,5 @@ dataset/wordsim353/
 dataset/other/
 experiment/src/tmp/
 experiment/src/uri/
-experiment/src/predicate/
+experiment/src/predicate*/
 experiment/src/path/
