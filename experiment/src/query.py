@@ -49,7 +49,9 @@ def file_list(dirpath, flag):
             pred_path1 = os.path.join(predicate_info_in, name)
         elif flag == 'out':
             pred_path1 = os.path.join(predicate_info_out, name)
-
+        elif flag == 'path':
+            pred_path1 = os.path.join(path_info, name)
+        
         for fn in os.listdir(uripath1):
             uripath2 = os.path.join(uripath1, fn)
             pred_path2 = os.path.join(pred_path1, fn)
@@ -92,6 +94,53 @@ def gen_sparql_predicate_out(uri):
     where {  ?object ?predicate <""" + uri + """>. 
     }"""
 
+def gen_sparql_path(uri1, uri2):
+    uri1 = uri1.strip()
+    uri2 = uri2.strip()
+    uri2 = '"' + uri2 + '"'
+    ret = prefix + """
+    select *
+    where { <""" + uri1 + """> ?p1 ?o1. 
+    ?o1 ?p2 ?o2.
+    ?o2 ?p3 ?o3.
+    FILTER (?o1="""+ uri2 + """ || 
+            ?o2="""+ uri2 + """ || 
+            ?o3="""+ uri2 + """)
+    }"""
+
+    return ret
+
+def run_path():
+    top_k = 5;
+    uris = file_list(uri_file, 'path')
+    for i in range(0, len(uris), 2):
+        e_list1 = []
+        with open(uris[i][-1], 'r') as word_in:
+            e_list1 = word_in.readlines()
+
+        e_list2 = []
+        with open(uris[i+1][-1], 'r') as word_in:
+            e_list2 = word_in.readlines()
+
+        for m in range(0, len(e_list1)):
+            for n in range(0, len(e_list2)):
+                query_path = gen_sparql_path(e_list1[m], e_list2[n])
+                ret_path = query(query_path)['results']
+                if len(ret_path['bindings']) == 0:
+                    continue
+
+                entity1 = e_list1[m].strip().split('/')[-1]
+                entity2 = e_list1[n].strip().split('/')[-1]
+                filename = entity1 + '-' + entity2
+
+                filepath = os.path.join(uris[i][0], filename)
+                print(filepath)
+                
+                if not os.path.isdir(uris[i][0]):
+                        os.makedirs(uris[i][0])
+                        
+                extract(ret_path, filepath)
+
 
 def run():
     """
@@ -118,4 +167,5 @@ def run():
                     extract(ret, filepath)
 
 if __name__ == '__main__':
-    run()
+    run_path()
+    
