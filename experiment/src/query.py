@@ -30,9 +30,14 @@ def query(sparql_str):
     Return:
         null
     """
-    sparql.setQuery(sparql_str)
-    sparql.setReturnFormat(JSON)
-    results = sparql.query().convert()
+    try:
+        sparql.setQuery(sparql_str)
+        sparql.setReturnFormat(JSON)
+        results = sparql.query().convert()
+    except Exception as e:
+        print_err(str(e))
+        results = {"results": {"bindings": []}}
+
     return results
 
 def file_list(dirpath, flag):
@@ -110,36 +115,49 @@ def gen_sparql_path(uri1, uri2):
 
     return ret
 
+def print_log(content):
+    with open('log/log.txt', 'a') as out:
+        out.write(content+'\n')
+
+def print_err(content):
+    with open('log/err.txt', 'a') as out:
+        out.write(content+'\n')        
+
 def run_path():
-    top_k = 5;
     uris = file_list(uri_file, 'path')
     for i in range(0, len(uris), 2):
-        e_list1 = []
+        
         with open(uris[i][-1], 'r') as word_in:
             e_list1 = word_in.readlines()
-
-        e_list2 = []
         with open(uris[i+1][-1], 'r') as word_in:
             e_list2 = word_in.readlines()
 
         for m in range(0, len(e_list1)):
             for n in range(0, len(e_list2)):
+                try:
+                    entity1 = e_list1[m].strip().split('/')[-1]
+                    entity2 = e_list2[n].strip().split('/')[-1]
+                except Exception as e:
+                    print_err(e_list1[n] + ':' + str(e))
+                    continue
+                
+                filename = entity1 + '-' + entity2
+                filepath = os.path.join(uris[i][0], filename)
+
+                if os.path.exists(filepath) or os.path.exists(filepath + '-0') or entity1 == entity2:
+                    print_log('file exits')
+                    continue
+                
                 query_path = gen_sparql_path(e_list1[m], e_list2[n])
                 ret_path = query(query_path)['results']
                 if len(ret_path['bindings']) == 0:
-                    continue
-
-                entity1 = e_list1[m].strip().split('/')[-1]
-                entity2 = e_list1[n].strip().split('/')[-1]
-                filename = entity1 + '-' + entity2
-
-                filepath = os.path.join(uris[i][0], filename)
-                print(filepath)
+                    filepath += '-0'
                 
                 if not os.path.isdir(uris[i][0]):
                         os.makedirs(uris[i][0])
                         
                 extract(ret_path, filepath)
+                print_log(filepath)
 
 
 def run():
