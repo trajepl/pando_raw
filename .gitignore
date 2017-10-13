@@ -6,3 +6,5 @@ experiment/src/tmp/
 experiment/src/uri/
 experiment/src/predicate*/
 experiment/src/path/
+experiment/src/log/
+experiment/src/nohup.out
