@@ -2,9 +2,15 @@ dataset/mc30/
 dataset/rg65/
 dataset/wordsim353/
 dataset/other/
+
 experiment/src/tmp/
 experiment/src/uri/
 experiment/src/predicate*/
 experiment/src/path/
 experiment/src/log/
+experiment/src/pf_ipf_info/
+
 experiment/src/nohup.out
+experiment/src/__pycache__/
+
+.vscode/
