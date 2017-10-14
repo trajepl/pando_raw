@@ -20,6 +20,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 predicate_info_in = 'predicate_in'
 predicate_info_out = 'predicate_out'
+pf_ipf = 'pf_ipf'
 path_info = 'path'
 uri_file = 'uri'
 
@@ -45,7 +46,7 @@ def file_list(dirpath, flag):
     Parameters:
         param1 - root path of json file
     Return:
-        n
+        list
     """
     ret = []
     for name in os.listdir(dirpath):
@@ -56,6 +57,10 @@ def file_list(dirpath, flag):
             pred_path1 = os.path.join(predicate_info_out, name)
         elif flag == 'path':
             pred_path1 = os.path.join(path_info, name)
+        elif flag == 'predicate_in':
+            pred_path1 = os.path.join(pf_ipf, name)
+        else:
+            pred_path1 = ''
         
         for fn in os.listdir(uripath1):
             uripath2 = os.path.join(uripath1, fn)
