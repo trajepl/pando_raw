@@ -13,16 +13,16 @@ def predicate_info_file(dirpath):
         path1 = os.path.join(dirpath, name)
         for dataset in os.listdir(path1):
             path2 = os.path.join(path1, dataset)
-        for num in os.listdir(path2):
-            path3 = os.path.join(path2, num)
+            for num in os.listdir(path2):
+                path3 = os.path.join(path2, num)
 
-            for word in os.listdir(path3):
-                path3_in = os.path.join(path3, word)
-                tmp_list = path3_in.split('/')
-                tmp_list[0] = 'predicate_out'
-                path3_out = '/'.join(tmp_list)
+                for word in os.listdir(path3):
+                    path3_in = os.path.join(path3, word)
+                    tmp_list = path3_in.split('/')
+                    tmp_list[0] = 'predicate_out'
+                    path3_out = '/'.join(tmp_list)
 
-                ret.append([path3_in, path3_out])
+                    ret.append([path3_in, path3_out])
     return ret
 
 def file_list(dirpath):
@@ -50,6 +50,7 @@ def entity_number():
         with open(entity[-1], 'r') as word_in:
             e_list = word_in.readlines()
             for e in e_list:
+                e = e.strip()
                 filename = os.path.join(entity_dir, e.replace('/', '-'))
                 if os.path.exists(filename):
                     print('File exists. Query already done.')
@@ -83,6 +84,7 @@ def read_predicate_num(fn, predicate_dir):
             predicate_change = predicate.replace('/','-')
             predicate_path = os.path.join(predicate_dir, predicate_change)
             if os.path.exists(predicate_path):
+                print('file exists')
                 continue
             
             print(tmp_str)
@@ -110,12 +112,16 @@ def predicate_num_query(predicate):
     """
 def record_number(fn, content):
     print(content)
+    if len(fn) > 200:
+        fn = fn[0:100]
     with open(fn, 'w') as out:
         out.write(content['bindings'][0]['count']['value'])
+    
+
 
 def run():
-    entity_number()
-    # predicate_number()
+    # entity_number()
+    predicate_number()
         
 if __name__ == '__main__':
     run()
