@@ -1,18 +1,26 @@
-- [x] [Taxonomy-based information content and wordnet-wiktionary-wikipedia glosses for semantic relatedness](http://download.springer.com/static/pdf/431/art%253A10.1007%252Fs10489-015-0755-x.pdf?originUrl=https%3A%2F%2Flink.springer.com%2Farticle%2F10.1007%2Fs10489-015-0755-x&token2=exp=1500453538~acl=%2Fstatic%2Fpdf%2F431%2Fart%25253A10.1007%25252Fs10489-015-0755-x.pdf%3ForiginUrl%3Dhttps%253A%252F%252Flink.springer.com%252Farticle%252F10.1007%252Fs10489-015-0755-x*~hmac=80d116c2ae9be63a560abac6d9766ec4db66b9b01b570c368c331d4712e87912)
-- [x] [Evaluating WordNet-based Measures of Lexical Semantic Relatedness](http://disi.unitn.it/~p2p/RelatedWork/Matching/Budanitsky+Hirst-2006.pdf)
+## survey
 - [x] [Survey:Semantic Similarity from Natural Language and Ontology analysis](https://arxiv.org/pdf/1704.05295.pdf)
-- [x] [REWOrD: Semantic Relatedness in the Web of Data]()
+- [x] [The state of the art in semantic relatedness:a framework for comparison](http://192.168.162.7/cache/13/03/ls3.rnet.ryerson.ca/974eb499583848cb0fad73f86ef365b4/State_of_the_art_in_semantic_relatedness_a_framework_for_comparison.pdf)
+
+## related word(order by citation count)
+- [x] [Computing Semantic Relatedness using Wikipedia-based Explicit Semantic Analysis](https://www.aaai.org/Papers/IJCAI/2007/IJCAI07-259.pdf)
+- [x] [An Effective, Low-Cost Measure of Semantic Relatedness Obtained from Wikipedia Links](https://www.aaai.org/Papers/Workshops/2008/WS-08-15/WS08-15-005.pdf)
+- [x] [WikiRelate! Computing Semantic Relatedness Using Wikipedia](http://www.aaai.org/Papers/AAAI/2006/AAAI06-223.pdf)
+- [x] [A Word at a Time: Computing Word Relatedness using Temporal Semantic Analysis](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.205.8607&rep=rep1&type=pdf)
 - [x] [WikiWalk: Random walks on Wikipedia for Semantic Relatedness](https://nlp.stanford.edu/pubs/wikiwalk-textgraphs09.pdf)
 - [x] [Lexical Semantic Relatedness with Random Graph Walks](https://nlp.stanford.edu/pubs/Hughes-Ramage-EMNLP2007.pdf)
+- [x] [REWOrD: Semantic Relatedness in the Web of Data](https://www.aaai.org/ocs/index.php/AAAI/AAAI12/paper/download/4923/5129)
 
-- [ ] [Computing semantic relatedness using Wikipedia features](http://www.sciencedirect.com/science/article/pii/S0950705113001913#b0250)
-- [ ] [SISR: System for integrating semantic relatedness and similarity measures](https://link.springer.com/article/10.1007/s00500-016-2438-x)
-- [x] [The state of the art in semantic relatedness: a framework for comparison](http://ls3.rnet.ryerson.ca/wiki/images/2/28/State_of_the_art_in_semantic_relatedness_a_framework_for_comparison.pdf)
+## 对改进12aaai上面的文章有借鉴意义的文章
+### embedding 
+- [x] [Combining Word Embedding and Lexical Database for Semantic Relatedness Measurement](http://gdac.uqam.ca/WWW2016-Proceedings/companion/p73.pdf)
+- [x] [SSP: Semantic Space Projection for Knowledge Graph Embedding with Text Descriptions](https://arxiv.org/pdf/1604.04835.pdf)
+- [x] [Translating embeddings for modeling multi-relational data](https://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-relational-data.pdf)
+### other
+- [ ] [Deep Learning in Exploring Semantic Relatedness for Microblog Dimensionality Reduction](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7418164)
+
+## useless paper involving semantic relatedness or outdated methods
 - [x] [semantic similarity:wikipedia](https://en.wikipedia.org/wiki/Semantic_similarity#cite_note-53)
-
-- [ ] [Comparing Semantic Relatedness between Word Pairs in Portuguese Using Wikipedia](http://download.springer.com/static/pdf/430/chp%253A10.1007%252F978-3-319-09761-9_17.pdf?originUrl=https%3A%2F%2Flink.springer.com%2Fchapter%2F10.1007%2F978-3-319-09761-9_17&token2=exp=1503986211~acl=%2Fstatic%2Fpdf%2F430%2Fchp%25253A10.1007%25252F978-3-319-09761-9_17.pdf%3ForiginUrl%3Dhttps%253A%252F%252Flink.springer.com%252Fchapter%252F10.1007%252F978-3-319-09761-9_17*~hmac=76538ff746aead9dcf2e2ca14f24603838f11cf2158cb77698875570a9aabb95)
-- [x] [WikiRelate! Computing Semantic Relatedness Using Wikipedia](http://www.aaai.org/Papers/AAAI/2006/AAAI06-223.pdf)
-- [x] [An Effective, Low-Cost Measure of Semantic Relatedness Obtained from Wikipedia Links](https://www.aaai.org/Papers/Workshops/2008/WS-08-15/WS08-15-005.pdf)
-- [ ] [Semantic Relatedness Using Salient Semantic Analysis](https://pdfs.semanticscholar.org/4e9c/459390caef1eb116c1f2fcbe7e79717f2964.pdf)
-- [x] [WikiWalk: Random walks on Wikipedia for Semantic Relatedness](https://nlp.stanford.edu/pubs/wikiwalk-textgraphs09.pdf)
-- [ ] [Lexical Semantic Relatedness and Its Application in Natural Language Processing](ftp://ftp.cs.toronto.edu/pub/gh/Budanitsky-99.pdf)
+- [x] [Semantic Relatedness Using Salient Semantic Analysis](https://pdfs.semanticscholar.org/4e9c/459390caef1eb116c1f2fcbe7e79717f2964.pdf)
+- [x] [Evaluating WordNet-based Measures of Lexical Semantic Relatedness](http://disi.unitn.it/~p2p/RelatedWork/Matching/Budanitsky+Hirst-2006.pdf)
+- [ ] [Computing semantic relatedness using Wikipedia features](http://www.sciencedirect.com/science/article/pii/S0950705113001913#b0250)
