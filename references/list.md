@@ -10,6 +10,8 @@
 - [x] [WikiWalk: Random walks on Wikipedia for Semantic Relatedness](https://nlp.stanford.edu/pubs/wikiwalk-textgraphs09.pdf)
 - [x] [Lexical Semantic Relatedness with Random Graph Walks](https://nlp.stanford.edu/pubs/Hughes-Ramage-EMNLP2007.pdf)
 - [x] [REWOrD: Semantic Relatedness in the Web of Data](https://www.aaai.org/ocs/index.php/AAAI/AAAI12/paper/download/4923/5129)
+- [x] [SENSEMBED: Learning Sense Embeddings for Word and Relational Similarity](http://www.aclweb.org/anthology/P15-1010)
+- [x] [Combining Word Embedding and Lexical Database for Semantic Relatedness Measurement](http://gdac.uqam.ca/WWW2016-Proceedings/companion/p73.pdf)
 
 ## 对改进12aaai上面的文章有借鉴意义的文章
 ### embedding 
