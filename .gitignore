@@ -14,5 +14,6 @@ experiment/src/nohup.out
 experiment/src/__pycache__/
 experiment/src/entgraph/triple/
 experiment/src/entgraph/finish
+experiment/src/entgraph/merger
 
 .vscode/
