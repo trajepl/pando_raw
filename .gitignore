@@ -3,7 +3,7 @@ dataset/rg65/
 dataset/wordsim353/
 dataset/other/
 
-experiment/src/merger.tsv
+experiment/src/merger.csv
 experiment/src/tmp/
 experiment/src/uri/
 experiment/src/predicate*/
@@ -16,5 +16,6 @@ experiment/src/__pycache__/
 experiment/src/entgraph/triple/
 experiment/src/entgraph/finish
 experiment/src/entgraph/merger
+experiment/src/measure/rg.csv.ret
 
 .vscode/
