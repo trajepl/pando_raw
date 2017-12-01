@@ -37,6 +37,7 @@ def ent_uri(fn):
         ret = ent_in.readlines()
     return ret
 
+@run_time          
 def rel_data(fn, dataset):
     global fin_list
     fin_list_p = open('finish', 'rb')
@@ -121,13 +122,13 @@ def is_english(ent):
 def outdicts(fnpt, ent, rets):
     tab = '    '
     for value in rets['results']['bindings']:
-        triple = ent + tab + value['p']['value'] + tab + value['o']['value']
+        triple = ent.strip() + tab + value['p']['value'] + tab + value['o']['value']
         fnpt.write(triple + '\n')
     
 def indicts(fnpt, ent, rets):
     tab = '    '
     for value in rets['results']['bindings']:
-        triple = value['s']['value'] + tab + value['p']['value'] + tab + ent
+        triple = value['s']['value'] + tab + value['p']['value'] + tab + ent.strip()
         fnpt.write(triple + '\n')
 
 @run_time
@@ -163,7 +164,7 @@ def record_one_step(fn, ret_list):
         pass
     for ret in ret_list:
         dfs(fn, ret)
-            
+
 if __name__ == '__main__':
     try:
         rel_data('../../../dataset/rg.csv', 'rg.csv')
