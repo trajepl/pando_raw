@@ -1,0 +1,94 @@
+\section{Template}
+
+\subsection{Semantic Measure}
+1. Semantic relatedness, which computes the correlation degree of two objects such as
+words, entities and texts, is fundamentalfor many applications. It has long been thought
+that when human measure the relatedness between a pair of owrds, a deeper reasoning is 
+triggered to compare the concepts behind the words.
+While many traditional studies on semantic relatedness utilize the lexical databases, 
+such as WordNet or Wikitionary, the recent word embedding learning approaches 
+demonstrate their abilities to capture syntactic and semantic information, and 
+outperform the lexicon-based methods. 
+
+2. Despite the well-established technical distinction between semantic similarity and 
+relatedness (Agirre et al., 2009; Budanitsky and Hirst, 2006; Resnik, 1995), comparison
+to established similarity norms from psychology remains part of the standard evaluative 
+procedure for assessing computational measures of semantic relatedness. Because similarity 
+is only one particular type of relatedness, comparison to similarity norms fails to give 
+a complete view of a relatedness measure’s efficacy.
+
+3. Semantic relatedness indicates how much two concepts are
+related in a taxonomy by using all relations between them
+(i.e. hyponymic/hypernymic, meronymic and any kind of
+functional relations including has-part, is-made-of, is-anattribute-of,
+etc.). When limited to hyponymy/hyperonymy
+(i.e. is-a) relations, the measure quantifies semantic similarity
+instead. Semantic relatedness measures are used in many
+applications in Natural Language Processing (NLP) such as
+word sense disambiguation (Patwardhan et al., 2005), information
+retrieval (Finkelstein et al., 2002), interpretation of
+noun compounds and spelling correction.
+
+4. Computing semantic relatedness between two words (or
+texts) is a fundamental task in natural language processing,
+artificial intelligence and information retrieval. Strictly
+speaking, semantic relatedness is a more general notion than
+semantic similarity as it captures not only closeness between
+two objects within a type hierarchy (e.g., river and stream),
+but also any other relations (e.g., river and boat) (Budanitsky
+and Hirst 2006). Traditionally, semantic similarity has
+been computed either within some lexicon (Jarmasz 2003;
+Resnik 1995; Jiang and Conrath 1997; Lin 1998) or by comparing
+the distributional properties of contexts (Deerwester
+et al. 1990; Gabrilovich and Markovitch 2007; Hassan and
+Mihalcea 2011). On the other hand, semantic relatedness
+has been largely modeled by co-occurrences within a window
+in a large text corpus.
+
+5. Reasoning about semantic relatedness of natural language uttrances is routinely performed by 
+humans but remains an unsurmountable obstacle for computers. Humans do not judge tex relatedness
+merely at the level of text words. Words trigger reasoning at a much deeper level that manipulates
+concept--the basic units of meaning that serve humans to organize and share their knowledge. Thus, 
+humans interpret the specific wording of a documemnt in the much larger context of their background 
+knowledge and experimence.
+
+It has long been recognized that in order to process natural language, computers require access to 
+vast amounts of common-sense and domain-specific world knowledge. However, prior work on semantic 
+relatedness was based on purely statistical techniques that did not make use of background
+knowledge or on lexical resources that incorporate very limited knowledge about the world.
+
+\subsection{Knowledge graph} 
+1. Knowledge graphs encode structured information of entities and their rich relations.
+Although a typical knowledge graph may contain millions of entities and billions of 
+relational facts, it is usually far from complete.
+
+2.People build large-scale knowledge graphs (KG), such as Freebase, DBpedia and YAGO, 
+to store complex structured information about the facts of the real world. The facts
+in KGs are usually organized in the form of triplets, e.g., (Washington, CapitalOf, USA). 
+KGs have been widely adoptedin various applications such as question answering and Web search.
+
+Existing KGs have already included thousands of relation
+types, millions of entities and billions of triplets. Nevertheless
+these KGs remain far from complete as compared to the
+amount of real-world facts. In order to further expand KGs,
+many researches have been devoted to automated fact exploration.
+
+Recently, neural-based representation learning (RL) methods
+are proposed to encode the semantics of both entities
+and relations in low-dimensional semantic space (i.e., embeddings),
+which can be further employed to discover novel facts.
+
+3. 
+
+
+\subsection{Knowledge graph embedding}
+1. Recently, models such as TransE and TransH build entity and relation embeddings by 
+regarding a relation as translation from head entity to tail entity. In fact, an entity
+may have multiple aspects and various relations may focus on different aspects of
+entities, which makes a common space insufficient for modeling.
+
+\subsection{Random walking}
+A number of aggregated proximity measures based on random walk have been proposed in the 
+literature, such as PageRank (including Personalized PageRank) and hitting time. Previous
+studied showed that these aggregated measures are more effective than individual links 
+and paths.
