@@ -22,8 +22,8 @@ Some researchs have attached importance to measure semantic relatedness
 in knowledge graph\cite{REWORD, SenseEmbed} recently. Trajep\cite{SenseEmbed}
 leverage entity linking to annotate the dump of wikipedia. Based on this,
 the sense-annotated corpus is generated. Then the author using word2vec to
-train the sense-annotated corpus getting distributed representation of different 
-word sense. This step still need a significant
+train the sense-annotated corpus resulting distributed representation of 
+different word senses. This step still needs a significant
 preprocessing and data transformation effort. As we can see the author
 just put the knowledge graph on the position of backup. Trajep \cite{REWORD}
 propose an approache exploiting the graph nature of RDF and SPARQL query
@@ -52,37 +52,40 @@ consider the entity with the highest rank. Secondly, Trajep misses
 some informativeness of \emph{predicates} as their stategy takes
 the predicates into account exclusively based on the TFIDF. This
 method ignore the function of \emph{objects} in a semantic triple.
-As show in Fig\ref{weak1}, subgraph contains \emph{Dogs} and \emph{Cats} extracted from
-knowledge. We simplify the sepcific features of entities to concise symbol. 
-We can see that entities in knowledge graph such as \emph{Cat} can play the role 
-of both \emph{Object} and \emph{Subject} in a pattern of triple, which means a predicate 
-\emph{p$_i$} may be used as an incoming or outgoing predicate w.r.t a entity
-\emph{E$_i$}. The relatedness space for a entity \emph{E$_i$} is modelled a 
-k-dimensional weighted vector \emph{V$_i$}, where each dimension represents
-the informativeness of a specific predicate\cite{BudanitskyH06}. For example, the weighted
-vector for \emph{Cat} is 
-[\emph{v$_{p1}$}, \emph{v$_{p2}$}, \emph{v$_{p1}$$^,$}, \emph{v$_{p2}$$^,$}, \emph{v$_{p1}$$^,$}]. 
-Obviously, while the author was considering the informativeness of a specific 
-predicate, ignore the the implications contained in the connected entities(e.g.
-\emph{E$_1$}, \emph{E$_2$}). The author do not distinguish the different 
-objects w.r.t a specific predicate. In order to improve the perfomance the computing
-of semantic relatedness based on knowledge graph, we propose a model to touch 
-the target. Our model is threefold.
+As show in Fig\ref{weak1}, we
 
-1. For given word pairs, the first job is to query
-the corresponding entities. In order to use the
-translating embedding for training the dataset, we
-also need to construct a graph contains all realted
-entities and relations between the corresponding
-entity pairs.
+% knowledge graph
+Computing semantic relatedness(SR) between two elements is a fundamental
+task for many applications in Natural Language Processing(NLP) such as
+word sense disambiguation(\cite{}), information retrieval(\cite{}),
+interpretation of noun compounds and spelling correction. Many researchers
+confound the defination of semantic relatedness with sematnic similarity.
+Strictly, semantic relatedness is a more general concept than semantic
+similarity as it captures not only closeness between two elements within
+a type hierarchy(e.g., river and stream), but also any other relations
+(e.g., river and boat)(\cite{BudanitskyH06}). As a result, computational
+applications typically require relatedness rather than just similarity.
 
-2. We use translating embedding for knowledge
-graph instead of Word2vec to train the subgraph
-extracted from the knowledge graph. Then we can
-get a distributional representation(vector) for each
-entities and predicates. 
+% our contribution
+Computing semantic relatedness(SR) between two elements is a fundamental
+task for many applications in Natural Language Processing(NLP) such as
+word sense disambiguation(\cite{}), information retrieval(\cite{}),
+interpretation of noun compounds and spelling correction. Many researchers
+confound the defination of semantic relatedness with sematnic similarity.
+Strictly, semantic relatedness is a more general concept than semantic
+similarity as it captures not only closeness between two elements within
+a type hierarchy(e.g., river and stream), but also any other relations
+(e.g., river and boat)(\cite{BudanitskyH06}). As a result, computational
+applications typically require relatedness rather than just similarity.
 
-3. When we take as inputs a word, we can get several 
-corresponding entities. Inspired by (\cite{}), we use 
-a approache to combine the informativenes hidden in the
-entity as the finnal semantic relatedness score.
+% conclusion
+Computing semantic relatedness(SR) between two elements is a fundamental
+task for many applications in Natural Language Processing(NLP) such as
+word sense disambiguation(\cite{}), information retrieval(\cite{}),
+interpretation of noun compounds and spelling correction. Many researchers
+confound the defination of semantic relatedness with sematnic similarity.
+Strictly, semantic relatedness is a more general concept than semantic
+similarity as it captures not only closeness between two elements within
+a type hierarchy(e.g., river and stream), but also any other relations
+(e.g., river and boat)(\cite{BudanitskyH06}). As a result, computational
+applications typically require relatedness rather than just similarity.
