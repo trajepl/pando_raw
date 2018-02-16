@@ -24,5 +24,6 @@ paper/latex/*
 !paper/latex/*.tex
 !paper/latex/*.sty
 !paper/latex/*.bib
+!paper/latex/*.bst
 
 .vscode/
