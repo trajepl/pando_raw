@@ -20,6 +20,7 @@ experiment/src/measure/rg.csv.ret
 
 paper/latex/*
 !paper/latex/tex/
+!paper/latex/pic/
 !paper/latex/*.tex
 !paper/latex/*.sty
 !paper/latex/*.bib
