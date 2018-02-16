@@ -1,0 +1,110 @@
+\section{Related Work}
+Computing semantic relatedness(SR) between two elements(words, sentences,
+texts etc.) is a fundamental task for many applications in Natural Language
+Processing(NLP) such as lexicon induction(\cite{aaai/QadirMGL15}), Named 
+Entity Disambiguation{\cite{acl/HanZ10}}, Keyword Extraction
+(\cite{ijcai/ZhangFW13}) and Information Retrieval(\cite{acl/GurevychMZ07}). 
+Additionaly, computing semantic relatedness contributes other applications, 
+for example, opinion spam problem (\cite{www/SandulescuE15}) and so on(+some example). 
+In this paper we focus on computing semantic relatedness between two 
+words in knowledge graph with neural network.
+
+
+Semantic measures are mathematical tools used to estimate the strength of the 
+semantic relationship between units of language, concepts or instances, through 
+a (numerical) description obtained according to the comparison of information 
+supporting their meaning. The semantic measures contain semantic relatedness,
+semantic similarity, semantic distance. The semantic distance equal to semantic 
+unsimilarity. The similarity is only one particular type of relatedness.
+Comparison to similarity fails to give a complete view of a relatedness measures.
+
+
+In this paper we computing semantic relatedness on the account of knowledge
+graph. Computational of semantic relatedness is a superset of similarity.
+The similarity is only one particular type of relatedness, comparison to
+similarity fails to give a complete view of a relatedness measures.
+
+Approaches to measuring semantic relatedness that use lexical
+resources (instead of distributional similarity of words, 
+e.g. Landauer and Dumais (1997) and Turney (2001)) transform
+that resource into a network or graph and compute
+relatedness using paths in it. Rada et al. (1989) traverse
+MeSH, a term hierarchy for indexing articles in Medline,
+and compute semantic relatedness straightforwardly in
+terms of the number of edges between terms in the hierarchy.
+Jarmasz and Szpakowicz (2003) use the same approach
+with Roget’s Thesaurus while Hirst and St-Onge (1998) apply
+a similar strategy to WordNet. Since the edge counting
+approach relies on a uniform modeling of the hierarchy,
+researchers started to develop measures for computing semantic
+relatedness which abstract from this problem (Wu and
+Palmer, 1994; Resnik, 1995; Leacock and Chodorow, 1998;
+Finkelstein et al., 2002; Banerjee and Pedersen, 2003, inter
+alia). Those researchers, however, focused on developing
+appropriate measures while keeping WordNet as the de facto
+primary knowledge source.
+
+\cite{aaai/StrubeP06}
+\cite{ijcai/GabrilovichM07}
+\cite{www/RadinskyAGM11}
+
+\cite{aaai/Pirro12}
+\cite{aaai/NavigliP12}
+
+\cite{acl/IacobacciPN15}
+
+\cite{ijcai/SenJHMOMVWH15} domain specific semantic relatedness 
+
+
+In this paper we focused on semantic relatedness, which
+generalizes similarity by considering not only specialization
+relations between words. The application of semantic
+relatedness span different areas from natural language processing
+(Patwardhan, Banerjee, and Pedersen 2003) to distributed
+systems (Pirro, Ruffolo, and Talia 2008). In the Se- ´
+8http://relwod.wordpress.com
+9http://uniprot.bio2rdf.org/sparql
+mantic Web context, some initiatives consider RDF predicates
+for vocabulary suggestion (Oren, Gerke, and Decker
+2007) while other (Freitas et al. 2011) exploit relatedness
+for query answering over Linked Data. However, differently
+from REWOrD none of them is specifically focused on computing
+relatedness in the Web of Data.
+Generally speaking, computational approaches to relatedness
+exploit different sources of background knowledge
+such as WordNet (e.g., (Resnik 1995; Budanitsky A 2001)),
+MeSH (e.g., (Rada, Mili, and Bicknell 1989; Pirro and ´
+Euzenat 2010)) or search engines (e.g., (Bollegala, Matsuo,
+and Ishizuka 2007; Turney 2001)). Recently, Wikipedia
+has been shown to be the most promising source of background
+knowledge for relatedness estimation (Gabrilovich
+and Markovitch 2007). Therefore we’ll consider approaches
+exploiting Wikipedia as baseline for comparison.
+WikiRelate! (Ponzetto and Strube 2007), given two words
+first retrieves the corresponding Wikipedia articles whose titles
+contain the words in input. Then, it estimates relatedness
+according to different strategies among which comparing
+the texts in the pages or computing the distance between
+the Wikipedia categories to which the pages belong.
+Explicit Semantic Analysis (Gabrilovich and Markovitch
+2007) compute relatedness both between words and text
+fragments. ESA derives an interpretation space for concepts
+by preprocessing the content of Wikipedia to build
+an inverted index that for each word, appearing in the corpus
+of Wikipedia articles, contains a weighted list of articles
+relevant to that word. Relevance is assessed by the
+TFIDF weighting scheme while relatedness is computed by
+the cosine of the vectors associated to the texts in input.
+WLM (Milne and Witten 2008) instead of exploiting text
+in Wikipedia articles, scrutinizes incoming/outgoing links
+to/from articles. WikiWalk (Yeh et al. 2009) extends the
+WLM by exploiting not only link that appear in an article
+(i.e., a Wikipedia page) but all links, to perform a random
+walk based on Personalized PageRank.
+The most promising approach, in terms of correlation, is
+ESA. However, ESA requires a huge preprocessing effort to
+build the index, only leverages text in Wikipedia and does
+not consider links among articles. Therefore, it may suffer
+some problems when the amount of text available is not large
+enough to build the interpretation vectors or when changing
+the source of background knowledge.
