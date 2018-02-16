@@ -48,8 +48,15 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  This paper proposes a novel methods for computing semantic relatedness enhanced by 
-  knowledge graph.
+  In this paper we focus on computing semantic relatedness get an approximation to human judgement.
+  We use the Knowledge Graph(DBpedia) which derived from wikipedia as the background knowledge.
+  Then we use knowledge graph embedding to generating high-dimensional vector representing corresponding
+  entities. For a input pairwise word, we get two sets of corresponding entities in DBpedia, resulting multiple
+  relatedness scores after a join between two set of entities.
+  In order to better fitting the judgement of human, we propose a combinatorial strategy to combine
+  multiple the relatedness scores of pairwise entities.
+  The experiments based on golded dataset for computing semantic relatedness show
+  that out model perform the state-of-the-art model.
 \end{abstract}
 
 \input{tex/introduction}
