@@ -1,6 +1,80 @@
 \section{Methology}
-\cite{aaai/NavigliP12}
+In order to compute semantic relatedness of a pair of words, we propose a model which is
+threefold. 
+For a given pair of words, we first query the corresponding entities in knowledge graph.
+We need to construct a special graph contains all related entities and related between the 
+corrsponding entity pairs.
+Then we use translating embedding for knowledge graph instead of Word2vec to train the constructed 
+graph. For each entity and relationship, this method produce a representation of vector.
+Besides, in the query step, we would get several corresponding entities for an input word. Inspired by
+\cite{acl/IacobacciPN15}, we combine the relatedness scores resulting from the multiple pairs of entities 
+as the final measure sorce in knowledge graph.
 
-\cite{acl/IacobacciPN15}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table*}[]
+    \small
+    \centering
+    \caption{Query Entity}
+    \label{entities}
+    \begin{tabular}{@{}|l|l|l|@{}}
+    \toprule
+    \textbf{Words}  & automobile                                               & car                                      \\ \midrule
+    \textbf{Entity} & http://dbpedia.org/resource/Automobile                   & http://dbpedia.org/resource/Automobile   \\ \midrule
+    \textbf{Entity} & http://dbpedia.org/resource/Automobile                   & http://dbpedia.org/resource/NASCAR       \\ \midrule
+    \textbf{Entity} & http://dbpedia.org/resource/Ferry                        & http://dbpedia.org/resource/Tram         \\ \midrule
+    \textbf{Entity} & http://dbpedia.org/resource/Internal\_combustion\_engine & http://dbpedia.org/resource/Auto\_racing \\ \midrule
+    \textbf{Entity} & http://dbpedia.org/resource/Gasoline                     & http://dbpedia.org/resource/Ferry        \\ \bottomrule
+    \end{tabular}    
+\end{table*}
+
+\subsection{Construct graph}
+Our aim is to compute the semantic relatedness between a pair of words. The process of related measure
+need complete and ample background knowledge which can be gathered in knowledge graph, such as DBPedia, YAGO etc.
+The first problem we face is how to obtain knowledge from knowledge graph. In our model, we utilize the DBPedia as
+our knowledge base to gather corresponding entities triggered by given words. Our model relies on lookup
+services such as that provided by DBPedia \footnote{http://lookup.dbpedia.org/api/search/KeywordSearch}. As show 
+in Table \ref{entities}, for a given word pair \emph{automobile and car}, 
+we can get the corresponding entities in DBPedia. The query returns URIs for representing entities in DBPedia. 
+These URIs describe entities so accurate that we can access knowledge graph using powerful query language SPARQL 
+to get everything we want.
+
+We can use the query results access knowledge graph now. Next we need to construct graph 
+contains all related entities and related between the corrsponding entity pairs. Inspired by \cite{aaai/NavigliP12},
+we propose a improved method to get our semantic graph. We mark entities corresponding to
+given words \emph{$w_1$} and \emph{$w_2$} as \emph{$E_1$} and \emph{$E_2$}. 
+Then we start by selecting the subgraph of DBPedia which contains all the path between entities
+($ENT = \emph{$E_1$} \cup \emph{$E_2$}$) and all attributes for each each entity in $ENT$. We do 
+this by building a directed grah ${G = (V, E)}$ which contains all relevant information which describes
+the entities set.
+
+i) We first define the set $V$ in $G$: $V:=ENT$. 
+The size of set $V$ is not fixed. It would be extended in the following steps.
+As for the set $E$, we initialize it as empty, i.e., $E:=\emptyset$.
+
+ii) In this step, we would find all path connecting the nodes in $V$. For each $v \in V$, 
+we adopt Depth-Fist Search(DFS) to go through the knowledge graph. Every time we find a node
+$v^, \in V$ but $v \ne v^,$ along a path($v, v_1, v_2,...,v_n, v^,$). Then we add all intermedia 
+nodes and edges in this path to $G$, i.e., $V:=V \cup \{v_1, ..., v_n\}$, 
+$E:=E \cup \{(v, v_1), ..., (v_k, v)\}$.
+
+iii) Next, we get all relevant attributes which are described as literal, number or something 
+else special sympol in knowledge graph. For example, there is a person A, his age is \emph{24}. He is a \emph{male}.
+The number \emph{42}, the literal \emph{male} are not entities in knowledge graph,
+but all are the attributes surrounding this person.
+For each $v \in V$, we collect all the surrounding attributes 
+$\{a_1, a_2, ..., a_k\}$. Then we have $V:=V \cup \{a_1, ..., a_k\}$, 
+$E:=E \cup \{(v_i, a_1), ..., (v_i, a_k)\}$ ($v_i \in V$).
+
+By this way, we extract a subgraph from DBPedia which consist of the all relevant information which describes
+the entities set.
+
+\subsection{Computing Semantic Relatedness}
 
 \cite{corr/Ledell17}
+
+\cite{aaai/BordesWCB11}
+
+
+\subsection{Optimization}
+\cite{acl/IacobacciPN15}
