@@ -34,18 +34,20 @@ In this step, our aim is to compute the semantic relatedness between a pair of w
 need complete and ample background knowledge which can be gathered in knowledge graph, such as DBPedia, YAGO etc.
 The first problem we face is how to obtain knowledge from knowledge graph. In our model, we utilize the DBPedia as
 our knowledge base to gather corresponding entities triggered by the given words. Our model relies on lookup
-services such as that provided by DBPedia \footnote{http://lookup.dbpedia.org/api/search/KeywordSearch}. As show 
-in Table \ref{entities}, for a given word pair \emph{automobile and car}, 
+services such as that provided by DBPedia \footnote{http://lookup.dbpedia.org/api/search/KeywordSearch}. 
+We use $W_{w_i}$ to denote the set of corrsponding entities in knowledge graph when we complate a query by word $w_i$,
+i.e., $W_{w_i}=\{E_1,...,E_k\}$, $E_i$ is the $i_{th}$ query entity.
+As show in Table \ref{entities}, for a given word pair \emph{automobile and car}, 
 we can get the corresponding entities in DBPedia. The query returns URIs for representing entities in DBPedia. 
 These URIs describe entities so accurate that we can access knowledge graph using powerful query language SPARQL 
 to get everything we want.
 
 We can use the query results to access knowledge graph after the above step is done. Next we need to construct graph 
 contains all related entities and attributes between the corrsponding entity pairs. Inspired by \cite{aaai/NavigliP12},
-we propose a improved method to get our semantic graph. We mark entities corresponding to
-given words \emph{$w_1$} and \emph{$w_2$} as \emph{$E_1$} and \emph{$E_2$}. 
+we propose a improved method to get our semantic graph. We get query entities for
+given words $w_1$ and $w_2$  correspond to $W_{w_1}$, $W_{w_2}$ individually. 
 Then we start by selecting the subgraph of DBPedia which contains all the path between entities
-($ENT = \emph{$E_1$} \cup \emph{$E_2$}$) and all attributes for each each entity in $ENT$. We do 
+($ENT = W_{w_1} \cup W_{w_1}$) and all attributes for each each entity in $ENT$. We do 
 this by building a directed grah ${G = (V, E)}$ which contains all relevant information which describes
 the entities set.
 
@@ -76,11 +78,113 @@ By this way, we extract a subgraph from DBPedia which consists of the relevant i
 the entities set.
 
 \subsection{Computing Semantic Relatedness}
+The constructed graph is fundamentally a multi-relational graph in which a entity is described by a set of discrete
+\emph{entities and attributes}. Fortunately, there have been a excellent work proposed by Facebook AI Research
+, \emph{StarSpace}. The model works by embedding those entities comprised of discrete featrues and
+comparing them against each other. In this section, we introducte the basic contents of \emph{StarSpace} briefly and
+how we utilize this model to get the vector representation of entities and relations. \emph{StarSpace} is available as
+an open-source project at \url{https://github.com/facebookresearch/StarSpace}.
 
-\cite{corr/Ledell17}
+In \emph{StarSpace}, to train our model, we need to compare entities is described by a set of discrete
+\emph{entities and attributes}. Specially, there is the following loss function in StarSpace:
 
-\cite{aaai/BordesWCB11}
+\begin{small}
+    \begin{equation}
+        \nonumber
+        \label{starspace_formula}
+        \sum_{\substack{(a,b) \in V^+\\ b^- \in V^-}}L^{batch}(sim(a,b),sim(a,b_1^-),...,sim(a,b_k^-))
+    \end{equation}
+\end{small}
+
+In our problem, the input data is a graph of of $(h, r, t)$ triples, consisting of a head entity $h$, 
+a relation $r$ and a tail entity $t$.
+Following the original paper which describes $StarSpace$, there are several explanations for this loss function:
+
+1) The positive entity pairs (a,b) come from the set $V^+$ sampled from constructed graph $G$. 
+In our problem, we need to select uniformly at random either to get positive sample $V^+$:
+(i)$a$ consistes of the bag of features $h$ and $r$, while $b$ consistes only of $t$; 
+(ii)$a$ consistes of $h$, and $b$ consists of $r$ and $t$. 
+
+2) Negative entities $b^-$ are sampled from the set of possible entities $V^-$.  
+StarSpace utilize a $k$-negative sampling startegy\cite{corr/Mikolov13} to select $k$ negative pairs for each batch update. 
+
+3) The selection of function $sim(.,.)$ is designed as a hyperparameter: cosine similarity and inner product.
+In our problem, we adop cosine similarity for the model as the cosine works better than inner product for
+larger numbers which is mentioned in the paper of StarSpace.
+
+4) The loss function $L_{batch}$ which compares the positive pair $(a,b)$ with the negative pairs $(a, b_i^i)$, $i=1,...,k$.
+It is also optional between margin ranking loss and negative log loss of softmax. All experiments in $StarSpace$ show
+the former performed on par or better. Thus we use margin ranking loss directly.
+
+5) The method optimazation inherit the stochastic gradient descent(SGD) used in $Starspace$. Each SGD step is one
+sampled from $V^+$ in the outer sum.
+
+As a result, we take the constructed graph $G$ of $(h, r, t)$ triples as inputs for the training model.
+For each entity and relation in graph $G$, there is a fixed-length vector as the learnt embedding which
+can then be used to computing semantic measure via cosine function.
+
+(Experiments:K-sample,dim of vector,epochs)
+% \cite{aaai/BordesWCB11}
 
 
-\subsection{Optimization}
+\subsection{Semantic Relatedness Measure}
+For a give word pairs($w_m$, $w_n$), we get ($W_{w_m}$, $W_{w_n}$), and $W_{w_m}=\{E_m^1,E_m^2...,E_m^k\}$,
+$W_{w_n}=\{E_n^1,E_n^2,...,E_n^k\}$. Then for each entity $E_m^i$ in $W_{w_m}$, the vector representation is
+$\overrightarrow E_m^i$.
+Note that, there might be diffirent number of corrspoding entities for a
+word. We just simplely consider the top-$k$ entities among those entities.
+
+1) For a enttity $E_m^i$ in entities set $W_{w_m}$, and $E_n^j$ in  $W_{w_n}$, we use cosine to compute the
+distance between two vectors($\overrightarrow E_m^i$, $\overrightarrow E_n^j$):
+
+\begin{small}
+    \begin{equation}
+        \label{cos}
+        \nonumber
+        Cos(\overrightarrow E_m^i,\overrightarrow E_n^j) = \frac{\overrightarrow E_m^i \cdot 
+        \overrightarrow E_n^j}{\left \| \overrightarrow E_m^i \right \|\left \| \overrightarrow E_n^j \right \|}
+    \end{equation}
+\end{small}
+
+2) 
+\begin{small}
+    \begin{equation}
+        \label{cos}
+        \nonumber
+        Rel_{closest}(w_1, w_2) = \max \limits_{\substack{E_1 \in W_1 \\ E_2 \in W_2}}
+        Cos(\overrightarrow E_1,\overrightarrow E_2)
+    \end{equation}
+\end{small}
+
+3) 
+\begin{small}
+    \begin{equation}
+        \label{cos}
+        \nonumber
+        d(E) = \frac{freq(E))}{\sum_{{s}'\in W_i} freq({s}'))}
+    \end{equation}
+\end{small}
+
+\begin{small}
+    \begin{math}
+        \label{cos}
+        \nonumber
+        Rel_{weight}(w_1, w_2)= \\
+        \sum_{E_1 \in W_1}\sum_{E_2 \in W_2}d(E_1)d(E_2)Cos(\overrightarrow E_1,\overrightarrow E_2)^\alpha 
+    \end{math}
+\end{small}
+
+\begin{small}
+    \begin{equation}
+        \label{cos}
+        \nonumber
+        Cos^*(\overrightarrow E_1,\overrightarrow E_2)=
+        \begin{cases} 
+        Cos(\overrightarrow E_1,\overrightarrow E_2) \times \beta, &if(s_1, s_2) \in E\\
+        Cos(\overrightarrow E_1,\overrightarrow E_2) \times \beta^{-1}, &otherwise
+        \end{cases}
+    \end{equation}
+\end{small}
+
+
 \cite{acl/IacobacciPN15}
