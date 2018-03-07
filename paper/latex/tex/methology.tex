@@ -129,62 +129,100 @@ can then be used to computing semantic measure via cosine function.
 
 \subsection{Semantic Relatedness Measure}
 For a give word pairs($w_m$, $w_n$), we get ($W_{w_m}$, $W_{w_n}$), and $W_{w_m}=\{E_m^1,E_m^2...,E_m^k\}$,
-$W_{w_n}=\{E_n^1,E_n^2,...,E_n^k\}$. Then for each entity $E_m^i$ in $W_{w_m}$, the vector representation is
+$W_{w_n}=\{E_n^1,E_n^2,...,E_n^k\}$. Then for each entity $E_m^i$ in $W_{w_m}$, we will get learnt embedding vector
 $\overrightarrow E_m^i$.
-Note that, there might be diffirent number of corrspoding entities for a
-word. We just simplely consider the top-$k$ entities among those entities.
+Note that, there might be different number of corrspoding entities for a
+word. We just consider the top-$k$ entities for each entities set. An analysis of the impact of K is
+given in section of experiments.
 
-1) For a enttity $E_m^i$ in entities set $W_{w_m}$, and $E_n^j$ in  $W_{w_n}$, we use cosine to compute the
-distance between two vectors($\overrightarrow E_m^i$, $\overrightarrow E_n^j$):
+For word pairs ($w_m$, $w_n$), when we compute semantic relatedness between their corrspoding entities, we
+will get $k*k$ relateness results. Inspired by \cite{acl/IacobacciPN15}, we combine all those relatedness
+results reasonably to get more human-like measurement.
+
+1) For two entities $E_1$ and $E_2$, we utilize cosine function to compute the
+distance between two embedding vectors($\overrightarrow E_1$, $\overrightarrow E_2$):
 
 \begin{small}
     \begin{equation}
         \label{cos}
         \nonumber
-        Cos(\overrightarrow E_m^i,\overrightarrow E_n^j) = \frac{\overrightarrow E_m^i \cdot 
-        \overrightarrow E_n^j}{\left \| \overrightarrow E_m^i \right \|\left \| \overrightarrow E_n^j \right \|}
+        Dis(\overrightarrow E_1,\overrightarrow E_2) = \frac{\overrightarrow E_1 \cdot 
+        \overrightarrow E_2}{\left \| \overrightarrow E_1 \right \|\left \| \overrightarrow E_2 \right \|}
     \end{equation}
 \end{small}
 
-2) 
+2) Following \cite{acl/IacobacciPN15}, we take two strategies for computing semantic relatedness of given
+words $w_1$ and $w_2$. One is conventional approach \cite{BudanitskyH06} which considers just the closest entities
+amonge multiple entities vectors pairs. There are $W_{w_1}$ and $W_{w_2}$ represent two entities sets associated with two
+input words $w_1$ and $w_2$. $\overrightarrow E_i$ is the learnt embedding vector of entity $E_i$. We can get the
+formalization for this approach.
+
 \begin{small}
     \begin{equation}
         \label{cos}
         \nonumber
-        Rel_{closest}(w_1, w_2) = \max \limits_{\substack{E_1 \in W_1 \\ E_2 \in W_2}}
+        Rel_{closest}(w_1, w_2) = \max \limits_{\substack{E_1 \in W_{w_1} \\ E_2 \in W_{w_1}}}
         Cos(\overrightarrow E_1,\overrightarrow E_2)
     \end{equation}
 \end{small}
 
-3) 
+However this relatedness measure approach misses the other entities also contribute to the computing of relatedness.
+In fact, psychological studies suggest that humans, while comparing similarity between a pair of words, consider
+different meanings of two words but not only the closest pairs\cite{}. This claim can be directly popularized when computing
+relatedness between words. There usually are various meanings for a single word. Analogously we can query multiple
+entities associated with the word from knowledge graph. Only consider the entities pair which have the closest distance
+is not conforming with the way of human thinking.
+
+Therefore, we propose another startegy for computing semantic relatedness, called $weighted$, in which
+different entities associated with words contribute to relatedness measurement. The contributions are
+scaled according to how they relative to the words. Fortunately, the lookup services of DBPedia in which can
+return a list of ranked DBpedia resources for a search string or word. There is a specific label called
+$Refcount$ that count the number of Wikipedia page inlinks for a resource. This number is required for ranking.
+We can leverage this number to estimate the dominance of each specific entity resource in knowledge graph.
+To this end, we use a operation of normalization. For each entities $E \in W_{w_i}$, we get the dominance of
+$E$ by dividing the value of $Refcount$ by the sum of all $Refcount$ value of entities in  $W_{w_i}$:
+
 \begin{small}
     \begin{equation}
         \label{cos}
         \nonumber
-        d(E) = \frac{freq(E))}{\sum_{{s}'\in W_i} freq({s}'))}
+        d(E) = \frac{refcount(E)}{\sum_{{E}'\in W_i} refcount({E}')}
     \end{equation}
 \end{small}
 
-\begin{small}
-    \begin{math}
-        \label{cos}
-        \nonumber
-        Rel_{weight}(w_1, w_2)= \\
-        \sum_{E_1 \in W_1}\sum_{E_2 \in W_2}d(E_1)d(E_2)Cos(\overrightarrow E_1,\overrightarrow E_2)^\alpha 
-    \end{math}
-\end{small}
+Besides, those entities which are closeer would play a more important role in computing relatedness measurement.
+We model this by biasing the relatedness computation towards closer entities through a power function with
+parameter $\alpha$. The relatedness of a pair of words $w_1$ and $w_2$ is computed as using $weighted$ strategy:
 
 \begin{small}
     \begin{equation}
+        \begin{split}
         \label{cos}
         \nonumber
-        Cos^*(\overrightarrow E_1,\overrightarrow E_2)=
-        \begin{cases} 
-        Cos(\overrightarrow E_1,\overrightarrow E_2) \times \beta, &if(s_1, s_2) \in E\\
-        Cos(\overrightarrow E_1,\overrightarrow E_2) \times \beta^{-1}, &otherwise
-        \end{cases}
+        Rel_{weight}&(w_1, w_2)=\\ 
+        &\sum_{E_1 \in W_1}\sum_{E_2 \in W_2}d(E_1)d(E_2)Cos(\overrightarrow E_1,\overrightarrow E_2)^\alpha 
+        \end{split}
     \end{equation}
 \end{small}
 
+% \begin{small}
+%     \begin{math}
+%         \label{cos}
+%         \nonumber
+%         Dis(E_1,E_2)
+%         =\lambda Cos(\overrightarrow E_1,\overrightarrow E_2) + (1-\lambda)\frac{1}{path(E_1, E_2)}
+%     \end{math}
+% \end{small}
 
-\cite{acl/IacobacciPN15}
+
+% \begin{small}
+%     \begin{equation}
+%         \label{cos}
+%         \nonumber
+%         Cos^*(\overrightarrow E_1,\overrightarrow E_2)=
+%         \begin{cases} 
+%         Cos(\overrightarrow E_1,\overrightarrow E_2) \times \beta, &if(s_1, s_2) \in E\\
+%         Cos(\overrightarrow E_1,\overrightarrow E_2) \times \beta^{-1}, &otherwise
+%         \end{cases}
+%     \end{equation}
+% \end{small}
