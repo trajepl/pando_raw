@@ -50,20 +50,27 @@
 \begin{document}
 \maketitle
 \begin{abstract}
+  % With development of knowledge representation, research in semantic relatedness measurement continues to make progress.
+  % Most of methods for computing semantic relatedness between two words are based on
+  % \emph{large corpora} and \emph{lexical databases}.
+  % There are only a few of these methods utilize the knowledge graph which contains syntactic and semantic information simultaneously.
   In this paper we focus on computing semantic relatedness getting an approximation to human judgement.
-  We use the Knowledge Graph(DBpedia) which is derived from wikipedia as the background knowledge.
-  Then we use knowledge graph embedding to generate high-dimensional vector representing corresponding
-  entities. For an input pairwise word, we get two sets of corresponding entities in DBpedia, resulting multiple
-  relatedness scores after a join between two set of entities.
-  In order to better fit the judgement of human, we propose a combinatorial strategy to combine
+  We utilize the Knowledge Graph(DBPedia) which is derived from wikipedia as the background knowledge.
+  For an input pairwise word, we will get two sets of corresponding entities in DBpedia.
+  Then we propose a model for extracting a subgraph which contains complete information surrounding two set of entities from DBPedia.
+  Then we use a model of knowledge graph embedding to train the subgraph generating high-dimensional vector for each entity and relation. 
+  Finally, we get multiple relatedness scores after a join between two set of entities.
+  In order to better fit the judgement of human, we utilize a weighted strategy to combine
   multiple relatedness scores of pairwise entities.
   The experiments based on golden dataset for computing semantic relatedness show
-  that out model perform the state-of-the-art model.
+  that our model outperform the state-of-the-art model.
 \end{abstract}
 
 \input{tex/introduction}
 \input{tex/relatedwork}
 \input{tex/methology}
+\input{tex/experiment}
+\input{tex/conclusion}
 
 \bibliography{acl2018}
 \bibliographystyle{acl_natbib}
