@@ -1,40 +1,40 @@
 \section{Related Work}
-Semantic measures are mathematical tools used to estimate the strength of the 
-semantic relationship between units of language, concepts or instances, through 
-a (numerical) description obtained according to the comparison of information 
+Semantic measures are mathematical tools used to estimate the intensity of the 
+semantic relationship between units of language,concepts or instances, through 
+a (numerical) description according to the comparison of information 
 supporting their meaning. The semantic measures contain semantic relatedness,
-semantic similarity, semantic distance. The semantic distance equal to semantic 
-unsimilarity. The similarity is only one particular type of relatedness.
+semantic similarity and semantic distance. The semantic distance equals to semantic 
+unsimilarity. The similarity is only a particular case of relatedness.
 There are so many researchs \cite{acl/IacobacciPN15, tkde/ZhuI17, tkde/LiBM03}
 which study the semantic similarity, and make significant accomplishment, even so,
-comparison to similarity fails to give a complete view of a relatedness measures.
+comparison for similarity fails to give a complete view of relatedness measures.
 
 % In this paper we focus on computing semantic relatedness on the account of knowledge
 % graph. 
 Many traditional studies on semantic relatedness
-utilize different data sources to compute semantic relatedness. There are
+utilize different data sources to computing semantic relatedness. There are
 
 i) \emph{the large corpora}, such as wikipedia. 
 WikiRelate! \cite{aaai/StrubeP06}, given two words
 first retrieves the corresponding Wikipedia articles whose titles
 contain the words in input. Then, it estimates relatedness
-according to different strategies among which comparing
+employing different strategies among which comparing
 the texts in the pages or computing the distance between
 the Wikipedia categories to which the pages belong.
 
 Explicit Semantic Analysis(ESA) \cite{ijcai/GabrilovichM07} makes a great impovement for computing semantic relatedness. 
 ESA represents the meaning of texts in a high-dimensional space of concepts derived from Wikipedia.
-They preprocess the content of Wikipedia to build an inverted index that for each word in texts.
-Relevance is assessed by the TFIDF weighting scheme while relatedness is computed by
+They preprocess the content of Wikipedia to build an inverted index for each word in texts.
+Relevance is computed by the TFIDF weighting scheme while relatedness is computed by
 the cosine of the vectors associated to the texts.
 Besides, WLM \cite{aaai/Milne08} instead of exploiting text in Wikipedia articles, 
 scrutinizes incoming/outgoing links to/from articles. WikiWalk \cite{textgraphs/YehRMAS09} extends the
 WLM by exploiting not only link that appear in an article (i.e., a Wikipedia page) but all 
 links, to perform a random walk based on Personalized PageRank.
 
-As the correlation coefficient in experiments show, the most promising approach is ESA in semantic 
-relatedness measure using wikipedia. 
-However, ESA requires a huge preprocessing effort to build the index for each word,
+As the correlation coefficient in experiments shows, the most promising approach to semantic relatedness
+is ESA using wikipedia. 
+However, a huge preprocessing effort are required when it comes to ESA for building the index for each word,
 and only leverages text in Wikipedia and does not consider links among articles. ESA is Ineffective.
 Besides, it may suffer some problems when changing the source of background knowledge.
 
@@ -46,7 +46,7 @@ to reveal the efficiency of semantic relatedness measures.
 \cite{aaai/ZeschMG08} introduce Wikithionary as an emerging lexical semantic resource
 that can be used as a substitute for expert-made resources in AI applications.
 Then they evaluate Wikithionary on the task of computing semantic relatedness.
-They choose(1) a path based approach\cite{its/Rada89}, can be utilized with any
+They choose(1) a path based approach\cite{its/Rada89}, which can be utilized with any
 resource containing concepts connected by lexical semantic relations. (2) a concept vector based approach
 \cite{ijcai/GabrilovichM07}. They generalize this approach to work on each
 resource which offers a textual representation of a concept.
@@ -54,15 +54,15 @@ resource which offers a textual representation of a concept.
 iii) \emph{the knowledge graph}. 
 With the increasing popularity of the linked data initiative, many public Knowledge Graphs (KGs) have
 become available, such as DBpedia, BabelNet which are novel semantic networks recording millions
-of concepts, entities and their relationships. Rencently, researchs have used the Knowledge Graph as
-background knowledge to computing semantic relatedness. 
+of concepts, entities and their relationships. Rencently, researchs have been used the Knowledge Graph as
+background knowledge to compute semantic relatedness. 
 
 \cite{acl/IacobacciPN15} leverage entity linking to annotate the dump of wikipedia. Based on this,
-the sense-annotated corpus is generated. Then the author using word2vec to
+the sense-annotated corpus is generated. Then the author uses word2vec to
 train the sense-annotated corpus getting distributed representation of different 
 word sense. This step still need a significant preprocessing and data transformation effort. 
-As we can see this approache computing semantic relatedness on account of large corpora.
-The author just put the knowledge graph on the position of support. 
+As we can see this approach computes semantic relatedness on the strength of large corpora.
+The author just regard the knowledge graph as a support. 
 
 \cite{aaai/NavigliP12} presents a knowledge-rich approach to computing multilingual semantic
 relatedness which exploits the joint contribution of different languages. Given a pair of words 
@@ -70,27 +70,27 @@ in two languages they use BabelNet to collect their translations, compute semant
 graphs in a variety of languages, and then combine the empirical evidence from these 
 different languages by intersecting their respective graphs.
 
-\cite{aaai/Pirro12} propose an approache exploiting the graph nature of RDF and SPARQL query
+\cite{aaai/Pirro12} propose an approach exploits the graph nature of RDF and SPARQL query
 Language to access knowledge graph. It not only obtains the comparable
 result with the state-of-art at that moment, but also avoids the burden
 of preprocessing and data transformation.
-Though \cite{aaai/Pirro12} avoids a significant preprocessing and data
-transformation effort, which develops it scalability when adopting a
+Though \cite{aaai/Pirro12} avoids the preprocessing and transformation effort,
+which develops its scalability when adopting a
 different source of knowledge graph, they miss some factors which
 have contributed to semantic relatedness measure. Firstly, given two words
-as input, the first step is to find corresponding entities in knowledge
-graph. Obviously, there are not only one entity in knowledge graph for a single
-word. For a input word \emph{car}, for example, we will get \emph{:Automobile} and
+as input, the first step is to find these corresponding entities in knowledge
+graph. Obviously, there are usually not only one entity in knowledge graph for a single
+word. For an input word \emph{car}, for example, we will get \emph{:Automobile} and
 \emph{:Auto\underline{\hspace{0.5em}}Racing} and so on. \cite{aaai/Pirro12} lose
 sight of the informativeness of the other entities, while they just
 consider the entity with the highest rank. Secondly, \cite{aaai/Pirro12} misses
 some informativeness of \emph{predicates} as their stategy takes
-the predicates into account exclusively based on the TFIDF.This
-method ignore the function of \emph{objects} in a semantic triple.
+the predicates into account exclusively based on the TFIDF,
+which ignores the function of \emph{objects} in a semantic triple.
 
 In summary, We use the Knowledge Graph(DBpedia) which derived from wikipedia as the background knowledge.
 Then we use knowledge graph embedding to generating high-dimensional vector representing corresponding
-entities. For a input pairwise word, we get two sets of corresponding entities in DBpedia, resulting multiple
+entities. For an input pairwise word, we get two sets of corresponding entities in DBpedia, resulting multiple
 relatedness scores after a join between two set of entities.
-In order to better fitting the judgement of human, we propose a combinatorial strategy to combine
-multiple the relatedness scores of pairwise entities.
+In order to better fit the judgement of human, we propose a combinatorial strategy to combine
+the relatedness scores of pairwise entities.

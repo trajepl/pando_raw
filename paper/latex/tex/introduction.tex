@@ -18,7 +18,7 @@ i) \emph{the large corpora}, such as wikipedia(\cite{ijcai/GabrilovichM07}),
 ii) \emph{the lexical databases}, such as WordNet(\cite{acl/Pucher07}) or Wikithionary(\cite{aaai/ZeschMG08}), 
 iii) \emph{the knowledge graph}, such as DBpedia(\cite{aaai/NavigliP12}) or BabelNet(\cite{aaai/NavigliP12}).
 With the development knowledge representation, computing semantic relatedness utilizing
-knowledge-rich resouce is a well-explored line of research. It is known to all that
+knowledge-rich resouce is a well-explored line of research. It is known to us all that
 knowledge graph contains both syntactic and semantic information which are 
 richer than lexical databases, and more sturctured knowledge than the large corpora.
 On the account of advantages of knowledge graph, we utilize it as background 
@@ -34,7 +34,7 @@ knowledge to compute semantic relatedness.
 
 \begin{figure*}
     \centering
-    \includegraphics[width=1.0\textwidth]{pic/weak1.pdf}\\
+    \includegraphics[width=1.0\textwidth]{pic/introduction.pdf}\\
     \caption{Subgraph example in knowledge graph}
     \label{weak1}
 \end{figure*}
@@ -42,7 +42,7 @@ knowledge to compute semantic relatedness.
 Recently, there are some researchs having attached importance to measure semantic relatedness
 in knowledge graph\cite{aaai/Pirro12, aaai/NavigliP12, acl/IacobacciPN15}. 
 \cite{acl/IacobacciPN15} leverage entity linking to annotate the dump of wikipedia. Based on this,
-the sense-annotated corpus is generated. Then the author usie word2vec to
+the sense-annotated corpus is generated. Then the author use word2vec to
 train the sense-annotated corpus getting distributed representation of different 
 word senses. This step still need a significant preprocessing and data transformation efforts. 
 As we can see this approach computing semantic relatedness on account of large corpora.
@@ -54,58 +54,65 @@ graphs in a variety of languages, and then combine the empirical evidence from t
 different languages by intersecting their respective graphs.
 \cite{aaai/Pirro12} propose an approach exploiting the graph nature of RDF and SPARQL query
 Language to access knowledge graph. It not only obtains the comparable
-result with the state-of-art at that moment, but also avoids the burden
+result with the state-of-art model at that moment, but also avoids the burden
 of preprocessing and data transformation.
 
-
-
-
 Though \cite{aaai/Pirro12} avoids a significant preprocessing and data
-transformation effort, which develops scalability of their appraoch while adopting a
-different source of knowledge graph. They miss some factors which
-have contributed to semantic relatedness measure. Firstly, given two words
+transformation effort, develops scalability of their approach while adopting 
+the knowledge graph. However, they miss some factors which
+might contribute to semantic relatedness measurement. Firstly, given two words
 as input, the first step is to find corresponding entities in knowledge
 graph. Obviously, there are usually more than one corresponding entity for a single word.
 For an input word \emph{car}, for example, we will get \emph{:Automobile} and
 \emph{:Auto\underline{\hspace{0.5em}}Racing} and so on. \cite{aaai/Pirro12} lose
 sight of the informativeness of the other entities, while they just
 consider the entity with the highest rank. Secondly, \cite{aaai/Pirro12} misses
-some informativeness of \emph{predicates} as their strategy takes
+some informativeness of \emph{objects} in \emph{triple(subject, prediacte, object)} as their strategy takes
 the predicates into account exclusively based on the TFIDF. This
 method ignored the function of \emph{objects} in a semantic triple.
+
 As show in Fig\ref{weak1}, subgraph contains \emph{Dogs} and \emph{Cats} extracted from
 knowledge. We simplify the sepcific features of entities to concise symbol. 
-We can see that entities in knowledge graph such as \emph{Cat} can play the role 
-of both \emph{Object} and \emph{Subject} in a pattern of triple, which means a predicate 
-\emph{p$_i$} may be used as an incoming or outgoing predicate w.r.t a entity
-\emph{E$_i$}. The relatedness space for a entity \emph{E$_i$} is modelled a 
+We can see that entities in knowledge graph such as \emph{Cat} plays the role 
+of both \emph{Object(Cats contains Cat)} and \emph{Subject(Cat $p_1$ $E_1$)}
+in a pattern of triple. The predicate which is connected with a entity(Cat)
+may be regarded as an outgoing($p_1$) or incoming predicate($p_{_1}$).
+In \cite{aaai/Pirro12}, the relatedness space for a entity ${E_i}$ is modelled a 
 k-dimensional weighted vector \emph{V$_i$}, where each dimension represents
-the informativeness of a specific predicate\cite{BudanitskyH06}. For example, the weighted
-vector for \emph{Cat} is 
-[\emph{v$_{p1}$}, \emph{v$_{p2}$}, \emph{v$_{p1}$$^,$}, \emph{v$_{p2}$$^,$}, \emph{v$_{p1}$$^,$}]. 
-Obviously, while the author was considering the informativeness of a specific 
-predicate, he ignored the the implications contained in the connected entities(e.g.
-\emph{E$_1$}, \emph{E$_2$}). The author do not distinguish the different 
+the informativeness of a specific predicate.
+For example, the weighted vector for \emph{Cat} is 
+$[v_{p_1}^o, v_{p_2}^o, v_{p_\_1}^i, v_{p_\_2}^i, v_{p_\_2}^i]$ in which $v_{p_i}^o$ 
+means the vector value of outgoing predicate $p_i$ and $v_{p_j}^i$ 
+means the vector value of incoming predicate $p_j$. 
+In this example, for the specific \emph{predicate} $p_1$, there are two triples:
+\emph{(Cat $p_1$ $E_1$)} and \emph{(Cat $p_2$ $E_2$)} describe the entity \emph{Cat}.
+The way of \cite{aaai/Pirro12} in which they get the contribute of $p_i$ is the number
+of triples of the form \emph{(Cat $p_1$ ?)} where the $p_1$ as a outgoing predicate
+divided by the total number of triples in which \emph{Cat} appears
+((Cat $p_1$ $E_1$), (Cat $p_1$ $E_2$), (Cat $p_2$ $E_3$)), i.e., $v_{p_1}^o$=2/3.
+They just ignore the function of a set of specific objects in a pattern of triple.
+Besides, there is another aspect they have ignored. In this example, for entities $Cat$,
+$Dog$ and $Wolf$, let us see the informativeness of prediacte $p_1$. We get
+\emph{{(Cat $p_1$ $E_1$),(Cat $p_1$ $E_2$),(Cat $p_1$ $E_4$),(Cat $p_1$ $E_8$)}}. 
+It is obvious that when they compute relatedness between \emph{Cat} and \emph{Wolf}, they get the
+vector value in outgoing predicate $p_1$ of \emph{Wolf} as same as the \emph{Dog}.
+In other words in the compare of dimension of predicate $p_1$ between \emph{Cat} and \emph{Wolf},
+\emph{Cat} and \emph{Dog}, they get no difference. Obviously, the author do not distinguish the different 
 objects w.r.t a specific predicate. In order to improve the perfomance of the computing
 semantic relatedness based on knowledge graph, we propose a model to touch 
-the target. Our model is threefold.
+the target. Our model is shown as below:
 
-1. For given word pairs, the first job is to query
-the corresponding entities. In order to use the
-translating embedding for training the dataset, we
-also need to construct a graph contains all related
-entities and relations between the corresponding
-entity pairs.
+1. For given word pairs, the first job is to query the corresponding entities. In order to use the
+neural network for training the dataset, we also need to construct a graph contains all related
+entities, attributes and relations between the corresponding entity pairs.
 
-2. We use translating embedding for knowledge
-graph instead of Word2vec to train the subgraph
-extracted from the knowledge graph. Then we can
-get a distributional representation(vector) for each
+2. We use Starspace proposed by Facebook for knowledge graph instead of Word2vec to train the subgraph
+extracted from the knowledge graph. Then we can get a distributional representation(vector) for each
 entities and predicates. 
 
-3. When we take as inputs a word, we can get several 
-corresponding entities. Inspired by \cite{acl/IacobacciPN15}, we use 
-a approach to combine the relatedness score resulting from the
-entity as the finnal semantic relatedness score in knowledge graph.
+3. When we take as inputs a word, we can get several corresponding entities.
+Inspired by \cite{acl/IacobacciPN15}, we utilize a approach to combine the 
+relatedness scores gathering from the compare of entity paris
+as the finnal semantic relatedness score in knowledge graph.
 
 This paper is organized as below. 
