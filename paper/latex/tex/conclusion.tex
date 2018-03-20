@@ -1,2 +1,11 @@
 \section{Conclusion}
-test.
+In this paper we focus on computing semantic relatedness getting an approximation to human judgement.
+We utilize the Knowledge Graph DBPedia which is derived from wikipedia as the background knowledge.
+For an input pairwise word, we will get two sets of corresponding entities in DBpedia.
+Then we propose a model for extracting a subgraph which contains complete information surrounding two set of entities from DBPedia.
+Then we use a model of knowledge graph embedding to train the subgraph generating high-dimensional vector for each entity and relation. 
+Finally, we get multiple relatedness scores after a join between two set of entities.
+In order to better fit the judgement of human, we utilize a weighted strategy to combine
+multiple relatedness scores of pairwise entities.
+The experiments based on golden dataset for computing semantic relatedness show
+that our model outperform the state-of-the-art model.

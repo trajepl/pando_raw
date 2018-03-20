@@ -1,2 +1,102 @@
 \section{Experiment}
-test
+In this section, we conduct extensive experiments on different datasets which
+contain the relatedness measured by human perceptions. We compute the Spearman
+correlation coefficient between results of experiments and scores of human judgement
+to evaluate the performance of our model. The model is implemented on 
+Core-7-7700K@4.20GHz$\times$8 machine with 16GB memory and a archlinux platform.
+ 
+\subsection{Dataset}
+To evaluate models for semantic relatedness measurement, a common approach is to compare
+the scores from the model and the scores provided by humans performing the same task.
+This approach provides an model-independent way for evaluating measures of relatedness.
+There are a good number of datasets which record the scores of human quantitative judgement
+for sematnic relatedness such as \emph{MC-30}\cite{MC30/Miller02}, \emph{RG-65}\cite{RG65/RubensteinG65}, 
+\emph{REL-122}\cite{acl/SzumlanskiGS13}, \emph{MEN}\cite{MEN/BruniTB14}, 
+\emph{YP-130}\cite{YP130/Yang06verbsimilarity}, \emph{WS}\cite{ws/AgirreAHKPS09},
+\emph{wordsim-353}\cite{wordsim353/FinkelsteinGMRSWR02}
+and so on. Some of these datasets are established with the measurement of 
+similarity called \emph{similarity dataset}. Some others are \emph{relatedness dataset}.
+Note that, all this datasets are English-language words.
+
+1)\emph{similarity dataset}:
+\emph{MC-30}, \emph{RG-65}, \emph{YP-130} and \emph{WS-353}are all established for computing similarity.
+\emph{RG-65} is the classical similarity dataset which contains 65 pairs of words.
+\emph{MC-30} contains 30 paris of words which is is the subset of \emph{RG-65}.
+\emph{YP-130} is established for computing verb similarity which contains 130 pairs of verb.
+\emph{wordsim353} contains two parts that are annotated by different groups of annotators.
+The first set (set1) contains 153 word pairs along with their similarity scores assigned by 13 subjects. 
+The second set (set2) contains 200 word pairs, with their similarity assessed by 16 subjects.
+All these above are mere similarity datasets which just consider a particular case of relatedness.
+There is another hybrid dataset \emph{WS} contains two sets of English word pairs along
+with human-assigned similarity and relatedness judegements, called \emph{WS-sim} and \emph{WS-Rel} separately.
+\emph{WS-sim} contains 203 paris of words along with similarity judgement,
+and \emph{WS-rel} contains 252 along with relatedness judegement.
+
+2)\emph{relatedness dataset}:
+Compared to the similarity dataset, there are a small number of relatedness dataset such as
+\emph{WS-Rel}, \emph{MEN} and \emph{REL-122}. \emph{WS-Rel} contains 252 pairs of words with
+human-assigned relatedness judegements. \emph{MEN} contains 3000 paris of words which do not
+instruct the subjects about the difference between similarity and relatedness. 
+Dut the great number of human-assigned relatedness judegements, this collection can
+be used to train and test computer algorithms implementing semantic similarity or relatedness measures.
+We would not consider this collection in our experiments because of the illegibility of semantic measurement.
+Another dataset \emph{REL-122} is a new relatedness norms which are a set of human-assigned relatedness scores
+for 122 pairs of nouns.
+
+The difference between similarity dataset and relatedness dataset is how human assigen the score for a
+given pair of words. A common example is the pair of words \emph{"wheels-car"}. The \emph{wheels} is more related
+with the \emph{car}, but they are dissimilar. \cite{acl/SzumlanskiGS13} created two additional experimental 
+conditions in which subjects evaluated the Relatedness of noun pairs from the \emph{MC-30} study. We select 
+ten pairs of words shown in table \ref{mc}. 
+\begin{table}[]
+    \centering
+    \caption{Relatedness vs MC-30 similarity}
+    \label{mc}
+    \renewcommand\arraystretch{1.2}
+    \setlength{\tabcolsep}{2.5mm}{
+        \begin{tabular}{|lllll|}
+        \hline
+        \textbf{\#}  & \multicolumn{2}{l}{\textbf{Noun Pairs}} & \textbf{Sim.} & \textbf{Rel.} \\ \hline
+        \textbf{1.}  & car              & automobile          & 3.92          & 4.00         \\
+        \textbf{2.}  & gem              & jewel               & 3.84          & 3.98         \\
+        \textbf{3.}  & coast            & shore               & 3.70          & 3.97         \\
+        \textbf{4.}  & journey          & car                 & 1.16          & 3.00         \\
+        \textbf{5.}  & forest           & graveyard           & 0.84          & 2.01         \\
+        \textbf{6.}  & coast            & hill                & 0.87          & 1.59         \\
+        \textbf{7.}  & shore            & woodland            & 0.63          & 1.63         \\
+        \textbf{8.}  & lad              & wizard              & 0.42          & 2.12         \\
+        \textbf{9.}  & crane            & implement           & 1.68          & 0.90         \\
+        \textbf{10.} & noon             & string              & 0.08          & 0.14         \\ \hline
+        \end{tabular}
+    }
+\end{table}
+We can see that the relatedness for pairs that are related but
+dissimilar(e.g., \emph{journey-car} and \emph{forest-graveyard}). 
+This indicates that asking subjects to evaluate “similarity” instead of “relatedness” can
+significantly impact the results in studies of semantic relatedness measurement.
+
+\subsection{Relatedness Measure}
+\subsubsection{Construct graph}
+\subsubsection{Embedding for Subgraph}
+\subsubsection{Semantic Relatedness Measure}
+
+\begin{table*}[]
+    \centering
+    \caption{My caption}
+    \label{my-label}
+    \renewcommand\arraystretch{1.15}
+    \setlength{\tabcolsep}{2.5mm}{
+        \begin{tabular}{lcllccl}
+        \hline
+        \multirow{2}{*}{\textbf{Measure}} & \multicolumn{5}{c}{\textbf{Dataset}}                                                                                          & \textbf{} \\ \cline{2-6}
+                                        & \multicolumn{1}{l}{MC-rel-30} & MC-sim-30 & RG-65                  & \multicolumn{1}{l}{rel122} & \multicolumn{1}{l}{wordrel} & Averrage  \\ \hline
+        \textbf{WikiRelate!}              & --                            & 0.45      & 0.52                   & --                         & --                          &           \\
+        \textbf{ESA}                      & --                            & 0.73      & 0.82                   & --                         & --                          &           \\
+        \textbf{WLM}                      & --                            & 0.70      & 0.64                   & --                         & --                          &           \\
+        \textbf{WikiWalk}                 & --                            & 0.61      & \multicolumn{1}{c}{--} & --                         & --                          &           \\
+        \textbf{REWOrD}                   & --                            & 0.72      & 0.78                   & --                         & --                          &           \\ \hline
+        \textbf{Pando-closest}            & \multicolumn{1}{l}{}          &           &                        & \multicolumn{1}{l}{}       & \multicolumn{1}{l}{}        &           \\
+        \textbf{Pando-weighted}           & \multicolumn{1}{l}{}          &           &                        & \multicolumn{1}{l}{}       & \multicolumn{1}{l}{}        &           \\ \hline
+        \end{tabular}
+    }
+\end{table*}
