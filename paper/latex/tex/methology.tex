@@ -32,6 +32,7 @@ as the final measure sorce between two words in knowledge graph.
 \end{table*}
 
 \subsection{Construct graph}
+\label{sec:construct graph}
 Our aim is to compute the semantic relatedness between a pair of words. The process of relatedness measure
 needs complete and ample background knowledge which can be gathered in knowledge graph, such as
 DBPedia\footnote{http://wiki.dbpedia.org/}, 
@@ -83,6 +84,7 @@ By this way, we extract a subgraph from DBPedia which consists of the relevant i
 the entities set.
 
 \subsection{Embedding for Subgraph}
+\label{sec:train}
 The constructed graph is fundamentally a multi-relational graph in which a entity is described by a set of discrete
 \emph{entities and attributes}. Fortunately, there have been a excellent work proposed by Facebook AI Research
 , \emph{StarSpace}. The model works by embedding those entities comprised of discrete featrues and
@@ -136,6 +138,7 @@ can then be used to compute semantic measure via cosine function.
 
 
 \subsection{Semantic Relatedness Measure}
+\label{sec:measure}
 For a given word pairs($w_m$, $w_n$), we get ($W_{w_m}$, $W_{w_n}$), and $W_{w_m}=\{E_m^1,E_m^2...,E_m^k\}$,
 $W_{w_n}=\{E_n^1,E_n^2,...,E_n^k\}$. Then for each entity $E_m^i$ in $W_{w_m}$, we will get learnt embedding vector
 $\overrightarrow E_m^i$.

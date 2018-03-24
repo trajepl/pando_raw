@@ -10,7 +10,7 @@ To evaluate models for semantic relatedness measurement, a common approach is to
 the scores from the model and the scores provided by humans performing the same task.
 This approach provides an model-independent way for evaluating measures of relatedness.
 There are a good number of datasets which record the scores of human quantitative judgement
-for sematnic relatedness such as \emph{MC-30}\cite{MC30/Miller02}, \emph{RG-65}\cite{RG65/RubensteinG65}, 
+for semantic relatedness such as \emph{MC-30}\cite{MC30/Miller02}, \emph{RG-65}\cite{RG65/RubensteinG65}, 
 \emph{REL-122}\cite{acl/SzumlanskiGS13}, \emph{MEN}\cite{MEN/BruniTB14}, 
 \emph{YP-130}\cite{YP130/Yang06verbsimilarity}, \emph{WS}\cite{ws/AgirreAHKPS09},
 \emph{wordsim-353}\cite{wordsim353/FinkelsteinGMRSWR02}
@@ -48,6 +48,7 @@ given pair of words. A common example is the pair of words \emph{"wheels-car"}. 
 with the \emph{car}, but they are dissimilar. \cite{acl/SzumlanskiGS13} created two additional experimental 
 conditions in which subjects evaluated the Relatedness of noun pairs from the \emph{MC-30} study. We select 
 ten pairs of words shown in table \ref{mc}. 
+
 \begin{table}[]
     \centering
     \caption{Relatedness vs MC-30 similarity}
@@ -74,29 +75,89 @@ We can see that the relatedness for pairs that are related but
 dissimilar(e.g., \emph{journey-car} and \emph{forest-graveyard}). 
 This indicates that asking subjects to evaluate “similarity” instead of “relatedness” can
 significantly impact the results in studies of semantic relatedness measurement.
+However, previous researchs do not consider the semantic difference among some datasets.
+For example, in \cite{ijcai/GabrilovichM07}, \cite{textgraphs/YehRMAS09}, \cite{aaai/Pirro12}
+and so on, the researchers all regard the dataset \emph{MC-30} as relatedness dataset to conduct experiments.
+Following these reasearch the similarity dataset \emph{MC-30} and \emph{RG-65} would be leveraged besides
+the relatedness datasets such as \emph{rel-122} and \emph{WS-rel}. Moreover, we extract the relatedness
+scores from \cite{acl/SzumlanskiGS13} which are shown in table \ref{mc} for dataset \emph{MC-30}.
 
-\subsection{Relatedness Measure}
-\subsubsection{Construct graph}
-\subsubsection{Embedding for Subgraph}
-\subsubsection{Semantic Relatedness Measure}
+For an given pair of words, we firstly get two sets of corresponding entities in DBPedia. 
+Then we adopt a method of embedding to train the subgraph which is extracted from DBPedia
+based on those entities. Finally,  we get multiple relatedness scores after
+a join between two set of entities. In order to better fit the judgement of human, we utilize a
+weighted strategy to combine multiple relatedness scores of pairwise entities.
+
+\subsection{Parameter tuning}
+We can recall from section \ref{sec:train} and \ref{sec:measure} that there are some parameter
+which may have an impact on semantic relatedness measure. Such as, the final relatedness
+socres would be affected by the dimension of vector of distributional representation
+as well as the number of entities associated with given words.
+Besides, we tune the $\alpha$ parameter for the \emph{weighted} strategy on \emph{WS-rel} dataset.
+We pick \emph{WS-rel} since there are not many comparison systems in the literature that
+report results on this dataset. Another reason is that the quantity of \emph{WS-rel} is more
+greater than other datasets which is comprehensive for our parameter tuning.
+Finally, we find the optimal values for $\alpha$ to be 7.
+
+% For the impact for final score which is affected by the number of entities queried by given words, we
+% show the variation trend of \emph{Spearman} correlation coefficient following the increase of queried entities.
+
+As you can see by the line chart \ref{dim}, we exhibit the impact of dimension of learnt embedding
+vector for relatedness measurement with \emph{closest} and \emph{weighted} strategy. 
+We conduct this result based on datasets which consist of
+\emph{MC-Rel-30}, \emph{MC-Sim-30}, \emph{RG-65}, \emph{rel-122}, and \emph{WS-rel}, and get the 
+average values of the results in five datasets shown in the sixth line chart finally. It is obviously
+that the we get the optimal relatedness scores when the dimension of vector is assigned to \emph{100}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.53\textwidth]{pic/dim.pdf}\\
+    \caption{The impact of Dimension of vector for relatedness measure}
+    \label{dim}
+\end{figure}
+
+
+
+In the figure \ref{ent-num}, following the dataset and measurement strategy, we draw the variation trend
+of semantic relatedness scores following the increase of the quantity of entities queried by given words.
+The slope of correlation coefficient curve rises gently with the increase of number of queried entities.
+Distinguishingly, when the quantity of queried entities is greater than 5, the correlation coefficient
+curve have a concave shown in pic \emph{X} because extra and overmuch entities would bring noise for the final
+semantic relatedness socres
+
+Compared to previous method of semantic relatedness measurement, we run our model on five dataset
+\emph{MC-Rel-30}, \emph{MC-Sim-30}, \emph{RG-65}, \emph{rel-122}, and \emph{WS-rel}, and report the
+\emph{Spearman} correlation coefficient performance for the two strategies of our model. It can been
+seen that our model proves to be highly reliable on semantic relatedness measurement tasks, obtaining
+the best performance on most datasets. In addition, our approach in dataset \emph{MC-Rel-30} out outperform
+the results in dataset \emph{MC-Sim-30} which proves our model if more suitable for computing semantic
+relatedness than similarity. 
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=0.53\textwidth]{pic/dim.pdf}\\
+    \caption{The impact of the number of entities queried by given words}
+    \label{ent-num} 
+\end{figure}
+
 
 \begin{table*}[]
     \centering
-    \caption{My caption}
-    \label{my-label}
+    \caption{Spearman correlation performance on five word similarity and relatedness datasets}
+    \label{spearman}
     \renewcommand\arraystretch{1.15}
     \setlength{\tabcolsep}{2.5mm}{
         \begin{tabular}{lcllccl}
         \hline
         \multirow{2}{*}{\textbf{Measure}} & \multicolumn{5}{c}{\textbf{Dataset}}                                                                                          & \textbf{} \\ \cline{2-6}
-                                        & \multicolumn{1}{l}{MC-rel-30} & MC-sim-30 & RG-65                  & \multicolumn{1}{l}{rel122} & \multicolumn{1}{l}{wordrel} & Averrage  \\ \hline
-        \textbf{WikiRelate!}              & --                            & 0.45      & 0.52                   & --                         & --                          &           \\
-        \textbf{ESA}                      & --                            & 0.73      & 0.82                   & --                         & --                          &           \\
-        \textbf{WLM}                      & --                            & 0.70      & 0.64                   & --                         & --                          &           \\
-        \textbf{WikiWalk}                 & --                            & 0.61      & \multicolumn{1}{c}{--} & --                         & --                          &           \\
-        \textbf{REWOrD}                   & --                            & 0.72      & 0.78                   & --                         & --                          &           \\ \hline
-        \textbf{Pando-closest}            & \multicolumn{1}{l}{}          &           &                        & \multicolumn{1}{l}{}       & \multicolumn{1}{l}{}        &           \\
-        \textbf{Pando-weighted}           & \multicolumn{1}{l}{}          &           &                        & \multicolumn{1}{l}{}       & \multicolumn{1}{l}{}        &           \\ \hline
+                                        & \multicolumn{1}{l}{MC-rel-30} & MC-30 & RG-65                  & \multicolumn{1}{l}{rel122} & \multicolumn{1}{l}{wordrel} & Averrage  \\ \hline
+        \textbf{WikiRelate!}              & --                            & 0.45          & 0.52                   & --                         & --                          &           \\
+        \textbf{ESA}                      & --                            & 0.75          & 0.82                   & --                         & --                          &           \\
+        \textbf{WLM}                      & --                            & 0.70          & 0.64                   & --                         & --                          &           \\
+        \textbf{WikiWalk}                 & --                            & 0.61          & \multicolumn{1}{c}{--} & --                         & --                          &           \\
+        \textbf{REWOrD}                   & --                            & 0.72          & 0.78                   & --                         & --                          &           \\ \hline
+        \textbf{Pando-closest}            & \multicolumn{1}{l}{}          & 0.81          &                        & \multicolumn{1}{l}{}       & \multicolumn{1}{l}{}        &           \\
+        \textbf{Pando-weighted}           & \multicolumn{1}{l}{}          & \textbf{0.85} &                        & \multicolumn{1}{l}{}       & \multicolumn{1}{l}{}        &           \\ \hline
         \end{tabular}
     }
 \end{table*}
