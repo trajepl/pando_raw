@@ -1,4 +1,5 @@
 \section{Methology}
+\label{methology}
 In order to compute semantic relatedness of a word pair, we propose a model which is
 threefold. 
 For a given pair of words, we first query the corresponding entities in knowledge graph.
@@ -15,18 +16,18 @@ as the final measure sorce between two words in knowledge graph.
 \begin{table*}[]
     \small
     \centering
-    \caption{Query Entity}
+    \caption{Query Entity (DBPedia: http://dbpedia.org/resource/)}
     \label{entities}
     \renewcommand\arraystretch{1.6}
     \setlength{\tabcolsep}{0.8mm}{
     \begin{tabular}{llclc}
     \toprule
     \textbf{Words}  & automobile                                               & \textbf{Refcount} & car                                      & \textbf{Refcount} \\ \hline
-    \textbf{Entity} & http://dbpedia.org/resource/Automobile                   & 5096     & http://dbpedia.org/resource/Automobile   & 5096     \\ \hline
-    \textbf{Entity} & http://dbpedia.org/resource/Auto\_racing                 & 2885     & http://dbpedia.org/resource/NASCAR       & 4317     \\ \hline
-    \textbf{Entity} & http://dbpedia.org/resource/Ferry                        & 2501     & http://dbpedia.org/resource/Tram         & 3988     \\ \hline
-    \textbf{Entity} & http://dbpedia.org/resource/Internal\_combustion\_engine & 1639     & http://dbpedia.org/resource/Auto\_racing & 2885     \\ \hline
-    \textbf{Entity} & http://dbpedia.org/resource/Gasoline                     & 1486     & http://dbpedia.org/resource/Ferry        & 2501     \\ \hline
+    \textbf{Entity} & DBPedia:Automobile                   & 5096     & DBPedia:Automobile   & 5096     \\ \hline
+    \textbf{Entity} & DBPedia:Auto\_racing                 & 2885     & DBPedia:NASCAR       & 4317     \\ \hline
+    \textbf{Entity} & DBPedia:Ferry                        & 2501     & DBPedia:Tram         & 3988     \\ \hline
+    \textbf{Entity} & DBPedia:Internal\_combustion\_engine & 1639     & DBPedia:Auto\_racing & 2885     \\ \hline
+    \textbf{Entity} & DBPedia:Gasoline                     & 1486     & DBPedia:Ferry        & 2501     \\ \hline
     \end{tabular}    
     }
 \end{table*}
@@ -90,7 +91,7 @@ The constructed graph is fundamentally a multi-relational graph in which a entit
 , \emph{StarSpace}. The model works by embedding those entities comprised of discrete featrues and
 comparing them against each other. In this section, we introducte the basic contents of \emph{StarSpace} briefly and
 how we utilize this model to get the vector representation of entities and relations. \emph{StarSpace} is available as
-an open-source project at \url{https://github.com/facebookresearch/StarSpace}.
+an open-source project at github\footnote{https://github.com/facebookresearch/StarSpace}.
 
 In \emph{StarSpace}, to train our model, we need to compare entities which is described by a set of discrete
 \emph{entities and attributes}. Specially, there is the following loss function in $StarSpace$:
@@ -133,7 +134,7 @@ As a result, we take the constructed graph $G$ of $(h, r, t)$ triples as inputs 
 For each entity and relation in graph $G$, there is a fixed-length vector as the learnt embedding which
 can then be used to compute semantic measure via cosine function.
 
-(Experiments:K-sample,dim of vector,epochs)
+%(Experiments:K-sample,dim of vector,epochs)
 % \cite{aaai/BordesWCB11}
 
 
@@ -190,7 +191,7 @@ relatedness between words. There usually are various meanings for a single word.
 entities associated with the word from knowledge graph. Only consider the entities pair which have the closest distance
 woule not be conforming with the way of human thinking.
 
-Therefore, there is another strategy for computing semantic relatedness, called $weighted$, in which
+There is another strategy for computing semantic relatedness, called \emph{weighted}, in which
 different entities associated with words contribute to relatedness measurement. The contributions are
 scaled according to how they relative to the words. Fortunately, the lookup services of DBPedia in which can
 return a list of ranked DBpedia resources for a search string or word. There is a specific label called

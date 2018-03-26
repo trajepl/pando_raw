@@ -32,15 +32,8 @@ knowledge to compute semantic relatedness.
 % Knowledge Graph, as a semantic graph, stores
 % vast amount of sturctured knowledge. 
 
-\begin{figure*}
-    \centering
-    \includegraphics[width=1.0\textwidth]{pic/introduction.pdf}\\
-    \caption{Subgraph example in knowledge graph}
-    \label{weak1}
-\end{figure*}
-
 Recently, there are some researchs having attached importance to measure semantic relatedness
-in knowledge graph\cite{aaai/Pirro12, aaai/NavigliP12, acl/IacobacciPN15}. 
+in knowledge graph\cite{aaai/Pirro12}, \cite{aaai/NavigliP12}, \cite{acl/IacobacciPN15}. 
 \cite{acl/IacobacciPN15} leverage entity linking to annotate the dump of wikipedia. Based on this,
 the sense-annotated corpus is generated. Then the author use word2vec to
 train the sense-annotated corpus getting distributed representation of different 
@@ -70,6 +63,13 @@ consider the entity with the highest rank. Secondly, \cite{aaai/Pirro12} misses
 some informativeness of \emph{objects} in \emph{triple(subject, prediacte, object)} as their strategy takes
 the predicates into account exclusively based on the TFIDF. This
 method ignored the function of \emph{objects} in a semantic triple.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=1.0\textwidth]{pic/introduction.pdf}\\
+    \caption{Subgraph example in knowledge graph}
+    \label{weak1}
+\end{figure*}
 
 As show in Fig\ref{weak1}, subgraph contains \emph{Dogs} and \emph{Cats} extracted from
 knowledge. We simplify the sepcific features of entities to concise symbol. 
@@ -115,4 +115,8 @@ Inspired by \cite{acl/IacobacciPN15}, we utilize a approach to combine the
 relatedness scores gathering from the compare of entity paris
 as the finnal semantic relatedness score in knowledge graph.
 
-This paper is organized as below. 
+This paper is organized as follows. We give the related work about semantic relatedness
+measurement in section \ref{related-word}. Then we elaborate the threefold model for
+computing relatedness scores in section \ref{methology}. Finally, we display an detailed
+illustration of experiment results which shows our model outperform the state-of-the-art model
+for computing semantic relatedness.

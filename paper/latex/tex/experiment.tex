@@ -109,12 +109,28 @@ We conduct this result based on datasets which consist of
 average values of the results in five datasets shown in the sixth line chart finally. It is obviously
 that the we get the optimal relatedness scores when the dimension of vector is assigned to \emph{100}.
 
-\begin{figure}[H]
+\begin{figure}
     \centering
-    \includegraphics[width=0.53\textwidth]{pic/dim.pdf}\\
-    \caption{The impact of Dimension of vector for relatedness measure}
-    \label{dim}
+    \subfigure[The impact of Dimension of vector for relatedness measure]{
+        \label{dim}\includegraphics[width=55mm]{pic/dim.pdf}}
+    \subfigure[The impact of the number of entities queried by given words]{
+        \label{ent-num}\includegraphics[width=55mm]{pic/dim.pdf}
+    }
 \end{figure}
+%     \begin{minipage}[t][0.5\linewidth]
+%         \centering
+%         \includegraphics[width=0.53]{pic/dim.pdf}
+%         \caption{The impact of Dimension of vector for relatedness measure}
+%         \label{dim}
+%     \end{minipage}
+
+%     \begin{minipage}[t][0.5\linewidth]
+%         \centering
+%         \includegraphics[width=0.53]{pic/dim.pdf}
+%         \caption{The impact of the number of entities queried by given words}
+%         \label{ent-num} 
+%     \end{minipage}
+% \end{figure}
 
 
 
@@ -125,23 +141,7 @@ Distinguishingly, when the quantity of queried entities is greater than 5, the c
 curve have a concave shown in pic \emph{X} because extra and overmuch entities would bring noise for the final
 semantic relatedness socres
 
-Compared to previous method of semantic relatedness measurement, we run our model on five dataset
-\emph{MC-Rel-30}, \emph{MC-Sim-30}, \emph{RG-65}, \emph{rel-122}, and \emph{WS-rel}, and report the
-\emph{Spearman} correlation coefficient performance for the two strategies of our model. It can been
-seen that our model proves to be highly reliable on semantic relatedness measurement tasks, obtaining
-the best performance on most datasets. In addition, our approach in dataset \emph{MC-Rel-30} out outperform
-the results in dataset \emph{MC-Sim-30} which proves our model if more suitable for computing semantic
-relatedness than similarity. 
-
-\begin{figure}[]
-    \centering
-    \includegraphics[width=0.53\textwidth]{pic/dim.pdf}\\
-    \caption{The impact of the number of entities queried by given words}
-    \label{ent-num} 
-\end{figure}
-
-
-\begin{table*}[]
+\begin{table}[H]
     \centering
     \caption{Spearman correlation performance on five word similarity and relatedness datasets}
     \label{spearman}
@@ -160,4 +160,12 @@ relatedness than similarity.
         \textbf{Pando-weighted}           & \multicolumn{1}{l}{}          & \textbf{0.85} &                        & \multicolumn{1}{l}{}       & \multicolumn{1}{l}{}        &           \\ \hline
         \end{tabular}
     }
-\end{table*}
+\end{table}
+
+Compared to previous method of semantic relatedness measurement, we run our model on five dataset
+\emph{MC-Rel-30}, \emph{MC-Sim-30}, \emph{RG-65}, \emph{rel-122}, and \emph{WS-rel}, and report the
+\emph{Spearman} correlation coefficient performance for the two strategies of our model. It can been
+seen that our model proves to be highly reliable on semantic relatedness measurement tasks, obtaining
+the best performance on most datasets. In addition, our approach in dataset \emph{MC-Rel-30} out outperform
+the results in dataset \emph{MC-Sim-30} which proves our model if more suitable for computing semantic
+relatedness than similarity. 

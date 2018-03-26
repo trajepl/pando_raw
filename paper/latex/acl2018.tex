@@ -1,79 +1,74 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2017/10/04
 %
-% File acl2018.tex
-%
-%% Based on the style files for ACL-2017, with some changes, which were, in turn,
-%% Based on the style files for ACL-2015, with some improvements
-%%  taken from the NAACL-2016 style
-%% Based on the style files for ACL-2014, which were, in turn,
-%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
-%% EACL-2009, IJCNLP-2008...
-%% Based on the style files for EACL 2006 by 
-%%e.agirre@ehu.es or Sergi.Balari@uab.es
-%% and that of ACL 08 by Joakim Nivre and Noah Smith
+\documentclass[runningheads]{llncs}
+  %
+  \usepackage{amsmath}
+  \usepackage{times}
+  \usepackage{latexsym}
+  \usepackage{graphicx}
+  \usepackage{float}
+  \usepackage{url}
+  \usepackage{booktabs}
+  \usepackage{multirow}
+  \usepackage{float}
+  \usepackage{subfigure}
+  % Used for displaying a sample figure. If possible, figure files should
+  % be included in EPS format.
+  %
+  % If you use the hyperref package, please uncomment the following line
+  % to display URLs in blue roman font according to Springer's eBook style:
+  % \renewcommand\UrlFont{\color{blue}\rmfamily}
+  
+  \begin{document}
+  %
+  \title{Contribution Title\thanks{Supported by organization x.}}
+  %
+  %\titlerunning{Abbreviated paper title}
+  % If the paper title is too long for the running head, you can set
+  % an abbreviated paper title here
+  %
+  \author{First Author\inst{1}\orcidID{0000-1111-2222-3333} \and
+  Second Author\inst{2,3}\orcidID{1111-2222-3333-4444} \and
+  Third Author\inst{3}\orcidID{2222--3333-4444-5555}}
+  %
+  \authorrunning{F. Author et al.}
+  % First names are abbreviated in the running head.
+  % If there are more than two authors, 'et al.' is used.
+  %
+  \institute{Princeton University, Princeton NJ 08544, USA \and
+  Springer Heidelberg, Tiergartenstr. 17, 69121 Heidelberg, Germany
+  \email{lncs@springer.com}\\
+  \url{http://www.springer.com/gp/computer-science/lncs} \and
+  ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
+  \email{\{abc,lncs\}@uni-heidelberg.de}}
+  %
+  \maketitle              % typeset the header of the contribution
+  %
+  \begin{abstract}
+    In this paper we focus on computing semantic relatedness getting an approximation to human judgement.
+    We utilize the Knowledge Graph(DBPedia) which is derived from wikipedia as the background knowledge.
+    For an input pairwise word, we will get two sets of corresponding entities in DBpedia.
+    Then we propose a model for extracting a subgraph which contains complete information surrounding two set of entities from DBPedia.
+    Then we use a model of knowledge graph embedding to train the subgraph generating high-dimensional vector for each entity and relation. 
+    Finally, we get multiple relatedness scores after a join between two set of entities.
+    In order to better fit the judgement of human, we utilize a weighted strategy to combine
+    multiple relatedness scores of pairwise entities.
+    The experiments based on golden dataset for computing semantic relatedness show
+    that our model outperform the state-of-the-art model.
+  
+  \keywords{First keyword  \and Second keyword \and Another keyword.}
+  \end{abstract}
+  %
+  %
+  %
+  \input{tex/introduction}
+  \input{tex/relatedwork}
+  \input{tex/methology}
+  \input{tex/experiment}
+  \input{tex/conclusion}
 
-\documentclass[11pt,a4paper]{article}
-\usepackage[hyperref]{acl2018}
-\usepackage{amsmath}
-\usepackage{times}
-\usepackage{latexsym}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{url}
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{float}
-
-%\aclfinalcopy % Uncomment this line for the final submission
-%\def\aclpaperid{***} %  Enter the acl Paper ID here
-
-%\setlength\titlebox{5cm}
-% You can expand the titlebox if you need extra space
-% to show all the authors. Please do not make the titlebox
-% smaller than 5cm (the original size); we will check this
-% in the camera-ready version and ask you to change it back.
-
-\newcommand\BibTeX{B{\sc ib}\TeX}
-
-\title{Instructions for ACL 2018 Proceedings}
-
-\author{First Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  {\tt email@domain} \\\And
-  Second Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  {\tt email@domain} \\}
-
-\date{}
-
-\begin{document}
-\maketitle
-\begin{abstract}
-  % With development of knowledge representation, research in semantic relatedness measurement continues to make progress.
-  % Most of methods for computing semantic relatedness between two words are based on
-  % \emph{large corpora} and \emph{lexical databases}.
-  % There are only a few of these methods utilize the knowledge graph which contains syntactic and semantic information simultaneously.
-  In this paper we focus on computing semantic relatedness getting an approximation to human judgement.
-  We utilize the Knowledge Graph(DBPedia) which is derived from wikipedia as the background knowledge.
-  For an input pairwise word, we will get two sets of corresponding entities in DBpedia.
-  Then we propose a model for extracting a subgraph which contains complete information surrounding two set of entities from DBPedia.
-  Then we use a model of knowledge graph embedding to train the subgraph generating high-dimensional vector for each entity and relation. 
-  Finally, we get multiple relatedness scores after a join between two set of entities.
-  In order to better fit the judgement of human, we utilize a weighted strategy to combine
-  multiple relatedness scores of pairwise entities.
-  The experiments based on golden dataset for computing semantic relatedness show
-  that our model outperform the state-of-the-art model.
-\end{abstract}
-
-\input{tex/introduction}
-\input{tex/relatedwork}
-\input{tex/methology}
-\input{tex/experiment}
-\input{tex/conclusion}
-
-\bibliography{acl2018}
-\bibliographystyle{acl_natbib}
-\end{document}
+  \bibliographystyle{splncs04}
+  \bibliography{acl2018}
+  \end{document}
