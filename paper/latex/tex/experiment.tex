@@ -1,52 +1,52 @@
 \section{Experiment}
 In this section, we conduct extensive experiments on different datasets which
-contain the relatedness measured by human perceptions. We compute the Spearman
+contain the semantic measurement by human perceptions. We compute the Spearman
 correlation coefficient between results of experiments and scores of human judgement
 to evaluate the performance of our model. The model is implemented on 
-Core-7-7700K@4.20GHz$\times$8 machine with 16GB memory and a archlinux platform.
+cpu Core-7-7700K@4.20GHz$\times$8 machine with 16GB memory and ArchLinux platform.
  
 \subsection{Dataset}
 To evaluate models for semantic relatedness measurement, a common approach is to compare
 the scores from the model and the scores provided by humans performing the same task.
-This approach provides an model-independent way for evaluating measures of relatedness.
-There are a good number of datasets which record the scores of human quantitative judgement
+This approach provides a model-independent way for evaluating measures of relatedness.
+A good number of datasets record the scores of human quantitative judgement
 for semantic relatedness such as \emph{MC-30}\cite{MC30/Miller02}, \emph{RG-65}\cite{RG65/RubensteinG65}, 
 \emph{REL-122}\cite{acl/SzumlanskiGS13}, \emph{MEN}\cite{MEN/BruniTB14}, 
 \emph{YP-130}\cite{YP130/Yang06verbsimilarity}, \emph{WS}\cite{ws/AgirreAHKPS09},
 \emph{wordsim-353}\cite{wordsim353/FinkelsteinGMRSWR02}
 and so on. Some of these datasets are established with the measurement of 
 similarity called \emph{similarity dataset}. Some others are \emph{relatedness dataset}.
-Note that, all this datasets are English-language words.
+Note that all these datasets are English-language words.
 
 1)\emph{similarity dataset}:
-\emph{MC-30}, \emph{RG-65}, \emph{YP-130} and \emph{WS-353}are all established for computing similarity.
+\emph{MC-30}, \emph{RG-65}, \emph{YP-130} and \emph{wordsim-353} are all established for computing similarity.
 \emph{RG-65} is the classical similarity dataset which contains 65 pairs of words.
-\emph{MC-30} contains 30 paris of words which is is the subset of \emph{RG-65}.
+\emph{MC-30} contains 30 pairs of words and is the subset of \emph{RG-65}.
 \emph{YP-130} is established for computing verb similarity which contains 130 pairs of verb.
 \emph{wordsim353} contains two parts that are annotated by different groups of annotators.
 The first set (set1) contains 153 word pairs along with their similarity scores assigned by 13 subjects. 
 The second set (set2) contains 200 word pairs, with their similarity assessed by 16 subjects.
 All these above are mere similarity datasets which just consider a particular case of relatedness.
-There is another hybrid dataset \emph{WS} contains two sets of English word pairs along
-with human-assigned similarity and relatedness judegements, called \emph{WS-sim} and \emph{WS-Rel} separately.
-\emph{WS-sim} contains 203 paris of words along with similarity judgement,
-and \emph{WS-rel} contains 252 along with relatedness judegement.
+There is another hybrid dataset \emph{WS} contains two sets of English words pairs along
+with human-assigned similarity and relatedness judgements, called \emph{WS-sim} and \emph{WS-Rel} separately.
+\emph{WS-sim} contains 203 pairs of words along with similarity judgement,
+and \emph{WS-rel} contains 252 along with relatedness judgement.
 
 2)\emph{relatedness dataset}:
-Compared to the similarity dataset, there are a small number of relatedness dataset such as
+Compared to the similarity datasets, there are a small number of relatedness datasets such as
 \emph{WS-Rel}, \emph{MEN} and \emph{REL-122}. \emph{WS-Rel} contains 252 pairs of words with
-human-assigned relatedness judegements. \emph{MEN} contains 3000 paris of words which do not
+human-assigned relatedness judgements. \emph{MEN} contains 3000 pairs of words which do not
 instruct the subjects about the difference between similarity and relatedness. 
-Dut the great number of human-assigned relatedness judegements, this collection can
+Due to the great number of human-assigned relatedness judgements, \emph{MEN} can
 be used to train and test computer algorithms implementing semantic similarity or relatedness measures.
 We would not consider this collection in our experiments because of the illegibility of semantic measurement.
-Another dataset \emph{REL-122} is a new relatedness norms which are a set of human-assigned relatedness scores
+Another dataset \emph{REL-122} is a new relatedness norm, and contains a set of human-assigned relatedness scores
 for 122 pairs of nouns.
 
-The difference between similarity dataset and relatedness dataset is how human assigen the score for a
+The difference between similarity dataset and relatedness dataset is how human assign the score for a
 given pair of words. A common example is the pair of words \emph{"wheels-car"}. The \emph{wheels} is more related
-with the \emph{car}, but they are dissimilar. \cite{acl/SzumlanskiGS13} created two additional experimental 
-conditions in which subjects evaluated the Relatedness of noun pairs from the \emph{MC-30} study. We select 
+with the \emph{car}, but they are dissimilar. The paper \cite{acl/SzumlanskiGS13} created two additional experimental 
+conditions in which subjects evaluated the relatedness of noun pairs from the similarity dataset \emph{MC-30}. We select 
 ten pairs of words shown in table \ref{mc}. 
 
 \begin{table}[]
@@ -75,38 +75,37 @@ We can see that the relatedness for pairs that are related but
 dissimilar(e.g., \emph{journey-car} and \emph{forest-graveyard}). 
 This indicates that asking subjects to evaluate “similarity” instead of “relatedness” can
 significantly impact the results in studies of semantic relatedness measurement.
-However, previous researchs do not consider the semantic difference among some datasets.
+However, previous researchers do not consider the semantic difference among some datasets.
 For example, in \cite{ijcai/GabrilovichM07}, \cite{textgraphs/YehRMAS09}, \cite{aaai/Pirro12}
 and so on, the researchers all regard the dataset \emph{MC-30} as relatedness dataset to conduct experiments.
-Following these reasearch the similarity dataset \emph{MC-30} and \emph{RG-65} would be leveraged besides
-the relatedness datasets such as \emph{rel-122} and \emph{WS-rel}. Moreover, we extract the relatedness
-scores from \cite{acl/SzumlanskiGS13} which are shown in table \ref{mc} for dataset \emph{MC-30}.
+Following these reasearches, the similarity dataset \emph{MC-30} and \emph{RG-65} would be leveraged in our experiments 
+besides the relatedness datasets \emph{rel-122} and \emph{WS-rel}. Moreover, we extract the relatedness
+scores from paper \cite{acl/SzumlanskiGS13}. And some of these pairs are shown in table \ref{mc} for dataset \emph{MC-30}.
 
-For an given pair of words, we firstly get two sets of corresponding entities in DBPedia. 
+For a given pair of words, we firstly get two sets of corresponding entities in DBPedia. 
 Then we adopt a method of embedding to train the subgraph which is extracted from DBPedia
-based on those entities. Finally,  we get multiple relatedness scores after
-a join between two set of entities. In order to better fit the judgement of human, we utilize a
+based on queried entities. Finally,  we get multiple relatedness scores after
+a full link between two sets of entities. In order to better fit the judgement of human, we utilize a
 weighted strategy to combine multiple relatedness scores of pairwise entities.
 
 \subsection{Parameter tuning}
-We can recall from section \ref{sec:train} and \ref{sec:measure} that there are some parameter
-which may have an impact on semantic relatedness measure. Such as, the final relatedness
-socres would be affected by the dimension of vector of distributional representation
-as well as the number of entities associated with given words.
+We can recall from section \ref{sec:train} and \ref{sec:measure} that there are some parameters
+which may have an impact on semantic relatedness measurement. The final relatedness
+socre would be affected by the dimension of vector as well as the number of entities associated with given words.
 Besides, we tune the $\alpha$ parameter for the \emph{weighted} strategy on \emph{WS-rel} dataset.
-We pick \emph{WS-rel} since there are not many comparison systems in the literature that
-report results on this dataset. Another reason is that the quantity of \emph{WS-rel} is more
-greater than other datasets which is comprehensive for our parameter tuning.
+We pick \emph{WS-rel} since there are not many comparison systems in literature that
+report results on this dataset. Another reason is that the quantity of \emph{WS-rel} is
+greater than other datasets. It is comprehensive for our parameter tuning using dataset \emph{WS-rel}.
 Finally, we find the optimal values for $\alpha$ to be 7.
 
 % For the impact for final score which is affected by the number of entities queried by given words, we
 % show the variation trend of \emph{Spearman} correlation coefficient following the increase of queried entities.
 
-As you can see by the line chart \ref{dim}, we exhibit the impact of dimension of learnt embedding
+As you can see by the line chart \ref{dim}, we exhibit the impact of dimensions of learnt
 vector for relatedness measurement with \emph{closest} and \emph{weighted} strategy. 
-We conduct this result based on datasets which consist of
-\emph{MC-Rel-30}, \emph{MC-Sim-30}, \emph{RG-65}, \emph{rel-122}, and \emph{WS-rel}, and get the 
-average values of the results in five datasets shown in the sixth line chart finally. It is obviously
+We conduct results based on datasets which consist of
+\emph{MC-Rel-30}, \emph{MC-Sim-30}, \emph{RG-65}, \emph{rel-122}, and \emph{WS-rel}, and we get the 
+average values of the results in five datasets shown in the sixth line chart finally. It is obvious
 that the we get the optimal relatedness scores when the dimension of vector is assigned to \emph{100}.
 
 \begin{figure}
@@ -116,30 +115,16 @@ that the we get the optimal relatedness scores when the dimension of vector is a
     \subfigure[The impact of the number of entities queried by given words]{
         \label{ent-num}\includegraphics[width=55mm]{pic/dim.pdf}
     }
+    \caption{Parameter Tuning}
 \end{figure}
-%     \begin{minipage}[t][0.5\linewidth]
-%         \centering
-%         \includegraphics[width=0.53]{pic/dim.pdf}
-%         \caption{The impact of Dimension of vector for relatedness measure}
-%         \label{dim}
-%     \end{minipage}
-
-%     \begin{minipage}[t][0.5\linewidth]
-%         \centering
-%         \includegraphics[width=0.53]{pic/dim.pdf}
-%         \caption{The impact of the number of entities queried by given words}
-%         \label{ent-num} 
-%     \end{minipage}
-% \end{figure}
 
 
-
-In the figure \ref{ent-num}, following the dataset and measurement strategy, we draw the variation trend
+In the figure \ref{ent-num}, we draw the variation trend
 of semantic relatedness scores following the increase of the quantity of entities queried by given words.
 The slope of correlation coefficient curve rises gently with the increase of number of queried entities.
 Distinguishingly, when the quantity of queried entities is greater than 5, the correlation coefficient
-curve have a concave shown in pic \emph{X} because extra and overmuch entities would bring noise for the final
-semantic relatedness socres
+curve has a concave shown in pic \emph{X} because extra and overmuch entities would bring noise for the final
+semantic relatedness scores.
 
 \begin{table}[H]
     \centering
@@ -164,8 +149,8 @@ semantic relatedness socres
 
 Compared to previous method of semantic relatedness measurement, we run our model on five dataset
 \emph{MC-Rel-30}, \emph{MC-Sim-30}, \emph{RG-65}, \emph{rel-122}, and \emph{WS-rel}, and report the
-\emph{Spearman} correlation coefficient performance for the two strategies of our model. It can been
-seen that our model proves to be highly reliable on semantic relatedness measurement tasks, obtaining
-the best performance on most datasets. In addition, our approach in dataset \emph{MC-Rel-30} out outperform
-the results in dataset \emph{MC-Sim-30} which proves our model if more suitable for computing semantic
+\emph{Spearman} correlation coefficient performance for the two strategies of our model. It can be
+seen that our model proves to be highly reliable on semantic relatedness measurement tasks. Our model obtains
+the best performance on most datasets. In addition, our approach in dataset \emph{MC-Rel-30} outperforms
+the results in dataset \emph{MC-Sim-30} which proves that our model is more suitable for computing semantic
 relatedness than similarity. 
