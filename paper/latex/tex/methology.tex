@@ -1,22 +1,22 @@
 \section{Methodlogy}
 \label{methodlogy}
-In order to compute semantic relatedness of a word pair, we propose a model which is
+In order to compute semantic relatedness of a pair of words, we propose a model which is
 threefold. 
 For a given pair of words, we first query the corresponding entities in knowledge graph.
-We need to construct a specific graph contains all related entities and attributes between the 
-corrsponding entity pairs. Then we use \emph{Starspace} to train the constructed 
-graph. For each entity and relationship, this method produce a representation of vector.
-In our method, we use cosine function to compare vectors corresponding to word pairs to get the relatedness measure.
+We need to construct a specific graph which contains all related entities and attributes between the 
+corresponding entity pairs. Then we use \emph{Starspace}\cite{corr/Ledell17} to train the constructed 
+graph. For each entity and relationship, this method produces a representation of vector.
+In our method, we use cosine function to compare vectors corresponding to word pairs and get the relatedness scores.
 Besides, in the query step, we would get several corresponding entities for an input word. Inspired by
-\cite{acl/IacobacciPN15}, we combine the relatedness scores computing from the multiple pairs of entities 
-as the final measure sorce between two words in knowledge graph.
+the SenseEmbed\cite{acl/IacobacciPN15}, we combine the relatedness scores computed from the multiple pairs of entities 
+as the final measure sorce between two words.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table*}[]
     \small
     \centering
-    \caption{Query Entity (DBPedia: http://dbpedia.org/resource/)}
+    \caption{Query Entities (\emph{DBPedia:} equals \emph{http://dbpedia.org/resource/})}
     \label{entities}
     \renewcommand\arraystretch{1.6}
     \setlength{\tabcolsep}{0.8mm}{
@@ -35,66 +35,68 @@ as the final measure sorce between two words in knowledge graph.
 \subsection{Construct graph}
 \label{sec:construct graph}
 Our aim is to compute the semantic relatedness between a pair of words. The process of relatedness measure
-needs complete and ample background knowledge which can be gathered in knowledge graph, such as
+needs complete and ample background knowledge which can be gathered from knowledge graph, such as
 DBPedia\footnote{http://wiki.dbpedia.org/}, 
 YAGO\footnote{https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/yago} etc.
 The first problem we face is how to obtain knowledge which is associated with given words from knowledge graph. 
 In our model, we utilize the DBPedia as our knowledge base to gather corresponding entities triggered by the given words.
-We relies on lookup services that is provided by DBPedia \footnote{http://lookup.dbpedia.org/api/search/KeywordSearch}. 
-We use $W_{w_i}$ to denote the set of corrsponding entities in knowledge graph when we complete a query by word $w_i$,
-i.e., $W_{w_i}=\{E_1,...,E_k\}$, $E_i$ is the $i_{th}$ query entity.
-As show in Table \ref{entities}, for a given word pair \emph{automobile and car}, 
-we can get the corresponding entities which are described as URIs for in DBPedia. 
-These URIs describe entities so accurate that we can access knowledge graph using powerful query language SPARQL 
-to get everything we want.
+We rely on lookup service\footnote{http://lookup.dbpedia.org/api/search/KeywordSearch} that is provided by DBPedia to achieve this object. 
+We use $W_{w_i}$ to denote the set of corresponding entities in knowledge graph when we complete a query by word $w_i$.
+Then we get $W_{w_i}=\{E_1,...,E_k\}$ where $E_i$ is the $i_{th}$ query entity associated with the given word.
+As show in Table \ref{entities}, for a given word pair \emph{(automobile,car)}, 
+we can get the appropriate entities which are described as URIs in DBPedia. 
+These URIs describe entities so accurate that we can access knowledge graph using powerful
+query language SPARQL\footnote{https://www.w3.org/TR/sparql11-overview/} to get everything we want.
 
-An entity is not only surrounding by entities, but also attributes. Let us see a example to explain the attributes 
-in knowledge graph. There is a person A, his age is \emph{24}. He is a \emph{male}.
-The number \emph{24} and the literal \emph{male} are not entities in knowledge graph,
-but all are the attributes surrounding this person.
-We can use the query results to access knowledge graph after the above step is done. Next we need to construct graph 
-contains all related entities, attributes and relations between the corrsponding entity pairs. Inspired by \cite{aaai/NavigliP12},
-we propose a improved method to get our semantic subgraph. We get query entities $W_{w_1}$ and $W_{w_2}$ individually
-corresponding to words $w_1$ and $w_2$. 
-Then we start by selecting the subgraph of DBPedia which contains all the path between entities
-($ENT = W_{w_1} \cup W_{w_1}$) and all attributes for each each entity in $ENT$. We do 
-this by building a directed grah ${G = (V, E)}$ which contains all relevant information which describes
+% sparql query norm for graph construction
+
+An entity can be surrounded by entities as well as attributes. There is an example to illustrate this structure
+in knowledge graph. Suppose that there is a person \emph{A}, his age is \emph{24}. His name is \emph{"John A"}.
+He has a friend called person \emph{B}. This person \emph{B} is an Entity surrounding the \emph{A}.
+Then the number \emph{24} and the literal \emph{"John A"} are not entities in knowledge graph,
+but all are the attributes surrounding this person \emph{A}.
+We can use the URIs shown in table\ref{entities} to access knowledge graph with the help of SPARQL. Next we need to construct a subgraph 
+that contains all related entities, attributes and relations between the corresponding entity pairs. Inspired by BabelRelate!\cite{aaai/NavigliP12},
+we propose a modified method to get our semantic subgraph. We get query sets of entities $W_{w_1}$ and $W_{w_2}$ individually
+by words $w_1$ and $w_2$. Then we select the subgraph which contains all the paths which connect entities in
+$ENT = W_{w_1} \cup W_{w_1}$. Besides, this subgraph also contains all attributes for each entity in $ENT$. We do 
+this by building a directed graph ${G = (V, E)}$ which contains all relevant information which describes
 the entities set.
 
-i) We first define the set $V$ in $G$: $V:=ENT$. 
+i) We define the set $V$ in $G$ as $V:=ENT$ first. 
 The size of set $V$ is not fixed. It would be extended in the following steps.
 As for the set $E$, we initialize it as empty, i.e., $E:=\emptyset$.
 
-ii)The goal of our method is to get the precise vector representation for corresponding entities,
-that acquires more complete information surrounding the entities.
-Accordingly, we can not only consider the neighbor entities of corresponding entity, but also
-need to find all path connecting the nodes in $V$. 
-We firstly get the one step neighbors for each $v \in V$. It is known to us all, the shorter
-length of path between two entities, the more relative they are.
+ii)The goal of our method is to get the precise vector representations for entities,
+that requires more complete information which surround the entities.
+Accordingly, for a specific entity, we not only need to consider its neighbor entities or attributes, but also
+need to find all paths which connect the nodes in $V$. 
+It is known to all, the shorter length of paths between two entities, the more relative these entities are.
+We firstly get the one-hop neighbors for each $v \in V$. 
 Secondly, we adopt Depth-First Search(DFS) to go through the knowledge graph. Every time we find a node
 $v^{'} \in V$ but $v \ne v^{'}$ along a path($v, v_1, v_2,...,v_n, v^{'}$), we add all intermedia 
 nodes and edges in this path to $G$, i.e., $V:=V \cup \{v_1, ..., v_n\}$, 
-$E:=E \cup \{(v, v_1), ..., (v_k, v^{'})\}$.
+$E:=E \cup \{(v, v_1), ..., (v_n, v^{'})\}$.
 
 iii) Next, we get all relevant attributes which are described as literal, number or something 
-else special sympol in knowledge graph. For each $v \in V$, we collect all the surrounding attributes 
-$\{a_1, a_2, ..., a_k\}$. Then we have $V:=V \cup \{a_1, ..., a_k\}$, 
+else special symbol in knowledge graph. For one entity $v_i \in V$, we collect all the one-hop attributes 
+$\{a_1, a_2, ..., a_k\}$. Then we have $V:=V \cup \{a_1, ..., a_k\}$ and
 $E:=E \cup \{(v_i, a_1), ..., (v_i, a_k)\}$ ($v_i \in V$).
 
 By this way, we extract a subgraph from DBPedia which consists of the relevant information which describes
-the entities set.
+the pair of entities.
 
 \subsection{Embedding for Subgraph}
 \label{sec:train}
-The constructed graph is fundamentally a multi-relational graph in which a entity is described by a set of discrete
-\emph{entities and attributes}. Fortunately, there have been a excellent work proposed by Facebook AI Research
-, \emph{StarSpace}. The model works by embedding those entities comprised of discrete featrues and
-comparing them against each other. In this section, we introducte the basic contents of \emph{StarSpace} briefly and
-how we utilize this model to get the vector representation of entities and relations. \emph{StarSpace} is available as
+The constructed graph is fundamentally a multi-relational graph in which an entity is described by a set of discrete
+\emph{entities} and \emph{attributes}. Fortunately, there have been an excellent work proposed by Facebook AI Research,
+\emph{StarSpace}\cite{corr/Ledell17}. The model works by embedding those entities comprised of discrete features and
+comparing them against each other. In this section, we introduce the basic contents of \emph{StarSpace} briefly and 
+elaborate how we utilize this model to get the vector representation of entities and relations. \emph{StarSpace} is available as
 an open-source project at github\footnote{https://github.com/facebookresearch/StarSpace}.
 
-In \emph{StarSpace}, to train our model, we need to compare entities which is described by a set of discrete
-\emph{entities and attributes}. Specially, there is the following loss function in $StarSpace$:
+In \emph{StarSpace}, to train our model, we need to compare entities which are described by a set of discrete
+\emph{entities} and \emph{attributes}. Specially, there is the following loss function in $StarSpace$:
 
 \begin{small}
     \begin{equation}
@@ -103,36 +105,34 @@ In \emph{StarSpace}, to train our model, we need to compare entities which is de
         \sum_{\substack{(a,b) \in V^+\\ b^- \in V^-}}L^{batch}(sim(a,b),sim(a,b_1^-),...,sim(a,b_k^-))
     \end{equation}
 \end{small}
-
 In our problem, the input data is a graph of $(h, r, t)$ triples, consisting of a head entity $h$, 
 a relation $r$ and a tail entity $t$.
 Following the original paper which describes $StarSpace$, there are several explanations for this loss function:
 
-1) The positive entity pairs (a,b) come from the set $V^+$ sampled from constructed graph $G$. 
-In our problem, the input is a group of triples $(h, r, t)$. So how to make our input fit
-the sample batch $(a, b)$? To this end, we need to select uniformly at random either to
-get positive sample $V^+$ in two strategies:
-(i)$a$ consistes of the bag of features $h$ and $r$, while $b$ consistes only of $t$; 
-(ii)$a$ consistes of $h$, and $b$ consists of $r$ and $t$. 
+1) The positive entity pair (a,b) comes from the set $V^+$ sampled from constructed graph $G$. 
+In our problem, the input is a group of triples $(h, r, t)$. In order to make our input fit
+the sample batch $(a, b)$, we need to select uniformly at random to get positive sample $V^+$ in two strategies:
+(i)$a$ consists of the bag of features $h$ and $r$, while $b$ consists only of $t$; 
+(ii)$a$ consists of $h$, and $b$ consists of $r$ and $t$. 
 
 2) Negative entities $b^-$ are sampled from the set of possible entities $V^-$.  
-StarSpace utilize a $k$-negative sampling strategy\cite{corr/Mikolov13} to select $k$ negative pairs for each batch update. 
-They select randomly from whithin the set of entities that can appear in the second argument of the similarity function.
+StarSpace utilizes a $k$-negative sampling strategy\cite{corr/Mikolov13} to select $k$ negative pairs for each batch update. 
+They select randomly whithin the set of entities that can appear in the second argument of the similarity function.
 
-3) The selection of function $sim(.,.)$ is designed as a hyperparameter: cosine similarity and inner product.
-In our problem, we adop cosine similarity for the model as the cosine works better than inner product for
-larger numbers which is mentioned in the paper of StarSpace.
+3) The selection of function $sim(.,.)$ is designed as a hyper-parameter: cosine similarity and inner product.
+In our problem, we adopt cosine similarity for the model as the cosine works better than inner product for
+larger dataset. This situation is mentioned in the paper of StarSpace.
 
-4) The loss function $L_{batch}$ which compares the positive pair $(a,b)$ with the negative pairs $(a, b_i^-)$, $i=1,...,k$.
+4) The loss function $L_{batch}$ compares the positive pairs $(a,b)$ with the negative pairs $(a, b_i^-)$, $i=1,...,k$.
 It is also optional between margin ranking loss and negative log loss of softmax. All experiments in $StarSpace$ show
 the former performed on par or better. Thus we use margin ranking loss as our loss function for computing semantic relatedness.
 
-5) The method optimazation inherit the stochastic gradient descent(SGD) used in $Starspace$. Each SGD step is one
-sampled from $V^+$ in the outer sum.
+5) The method optimization inherit the strategy of stochastic gradient descent(SGD) used in $Starspace$. Each SGD step is one
+sampling from $V^+$ in the outer sum.
 
 As a result, we take the constructed graph $G$ of $(h, r, t)$ triples as inputs for the training model.
-For each entity and relation in graph $G$, there is a fixed-length vector as the learnt embedding which
-can then be used to compute semantic measure via cosine function.
+For each entity and relation in graph $G$, there is a fixed-length vector which can
+then be used to compute semantic relatedness via cosine function.
 
 %(Experiments:K-sample,dim of vector,epochs)
 % \cite{aaai/BordesWCB11}
@@ -140,21 +140,21 @@ can then be used to compute semantic measure via cosine function.
 
 \subsection{Semantic Relatedness Measure}
 \label{sec:measure}
-For a given word pairs($w_m$, $w_n$), we get ($W_{w_m}$, $W_{w_n}$), and $W_{w_m}=\{E_m^1,E_m^2...,E_m^k\}$,
+For a given pair of words($w_m$, $w_n$), we get ($W_{w_m}$, $W_{w_n}$), and $W_{w_m}=\{E_m^1,E_m^2...,E_m^k\}$,
 $W_{w_n}=\{E_n^1,E_n^2,...,E_n^k\}$. Then for each entity $E_m^i$ in $W_{w_m}$, we will get learnt embedding vector
 $\overrightarrow E_m^i$.
 Note that, there might be different number of entities associated with the given
-word. We just consider the top-$k$ entities in each entities set. An analysis of the impact of $K$ is
+word. We just consider the top-$k$ entities in each entities set. An analysis of the impact of $k$ is
 given in section of experiments.
 
-For a word pair ($w_1$, $w_2$), when we compute semantic relatedness between their corrspoding entities, we
-will get $k*k$ relateness results where $k$ is number of entities queried from knowledge graph.
-The task which cmobines multiple semantic measurement is similar with the work in \cite{acl/IacobacciPN15}.
-The author captures the different meanings of a word and transforms word embeddings to the sense level.
-They utilize the weighted conbination of comparison in sense leval which achieve a high correlation coefficient.
-In our work, the multiple-pair entities produce different semantic measurement. Traditional work only consider the
-the relatedness measurement of closest objects. However, in this way, the contributions of the other entities would be ignored.
-Following the work in \cite{acl/IacobacciPN15}, we combine all those relatedness
+For a pair ($w_1$, $w_2$), we compute semantic relatedness between their corresponding entities. After that, we
+get $k*k$ relatedness results where $k$ is number of entities queried from knowledge graph.
+The task which combines multiple semantic measurement is similar with the work in SenseEmbed\cite{acl/IacobacciPN15}.
+The author captureed the different meanings of a word and transformed word embedding to the sense level.
+They utilized the weighted combination of comparison in sense level which achieved a high correlation coefficient.
+In our work, the multiple-pair entities produce different semantic measurement. Traditional work only considers the
+the relatedness measurement of closest objects. If we only utilize closest combination, the contributions of the other
+entities would be ignored. Following the work in SenseEmbed, we combine all those relatedness
 results reasonably to get more human-like measurement.
 
 1) For two entities $E_1$ and $E_2$, we utilize cosine function to compute the
@@ -164,16 +164,16 @@ distance between two embedding vectors($\overrightarrow E_1$, $\overrightarrow E
     \begin{equation}
         \label{cos}
         \nonumber
-        Dis(\overrightarrow E_1,\overrightarrow E_2) = \frac{\overrightarrow E_1 \cdot 
+        Cos(\overrightarrow E_1,\overrightarrow E_2) = \frac{\overrightarrow E_1 \cdot 
         \overrightarrow E_2}{\left \| \overrightarrow E_1 \right \|\left \| \overrightarrow E_2 \right \|}
     \end{equation}
 \end{small}
 
-2) Following \cite{acl/IacobacciPN15}, we take two strategies for computing semantic relatedness of given
+2) Following SenseEmbed, we take two strategies to compute semantic relatedness between given
 words $w_1$ and $w_2$ for comparison. One is conventional approach \cite{BudanitskyH06} which considers just the closest entities
-amonge multiple entities vector pairs. There are $W_{w_1}$ and $W_{w_2}$ represent two entities sets associated with two
+among multiple vector pairs. There are $W_{w_1}$ and $W_{w_2}$ represent two entities sets associated with two
 input words $w_1$ and $w_2$. $\overrightarrow E_i$ is the learnt embedding vector of entity $E_i$. We can get the
-formalization for this approach.
+formalization for this strategy.
 
 \begin{small}
     \begin{equation}
@@ -183,21 +183,20 @@ formalization for this approach.
         Cos(\overrightarrow E_1,\overrightarrow E_2)
     \end{equation}
 \end{small}
-
-However this relatedness measure approach misses the other entities that also contribute to the computing of relatedness.
+However this relatedness measurement approach misses contributions of the other entities.
 In fact, psychological studies suggest that humans, while comparing similarity between a pair of words, consider
-different meanings of two words but not only the closest pairs\cite{Tversky77}. This claim can be directly popularized to computing
+different meanings of two words but not only the closest pairs\cite{Tversky77}. This claim can be directly popularized to compute
 relatedness between words. There usually are various meanings for a single word. Analogously we can query multiple
 entities associated with the word from knowledge graph. Only consider the entities pair which have the closest distance
-woule not be conforming with the way of human thinking.
+would not be conforming with the way of human thinking.
 
 There is another strategy for computing semantic relatedness, called \emph{weighted}, in which
-different entities associated with words contribute to relatedness measurement. The contributions are
-scaled according to how they relative to the words. Fortunately, the lookup services of DBPedia in which can
-return a list of ranked DBpedia resources for a search string or word. There is a specific label called
+we consider the contributions of different entities associated with given words. The contributions are
+scaled according to how they relative to the words. Fortunately, the lookup services of DBPedia can
+return a list of ranked DBpedia resources for a search string or a single word. There is a specific label called
 $Refcount$ that count the number of Wikipedia page inlinks for a resource. This number is required for ranking.
 We can utilize this number to estimate the dominance of each specific entity resource in knowledge graph.
-To this end, we use a operation of normalization. For each entities $E \in W_{w_i}$, we get the dominance of
+To this end, we use an operation of normalization. For each entity $E \in W_{w_i}$, we get the dominance of
 $E$ by dividing the value of $Refcount$ by the sum of all $Refcount$ value of entities in  $W_{w_i}$:
 
 \begin{small}
@@ -208,9 +207,9 @@ $E$ by dividing the value of $Refcount$ by the sum of all $Refcount$ value of en
     \end{equation}
 \end{small}
 
-Besides, those entities which are closer would play a more important role in computing relatedness measurement.
-Following the \cite{acl/IacobacciPN15}, we model this by biasing the relatedness computation towards closer entities through a power function with
-parameter $\alpha$. The relatedness of a pair of words $w_1$ and $w_2$ is computed as using $weighted$ strategy:
+Besides, those entities which are closer would play a more important role in computing semantic relatedness.
+Following the SenseEmbed, we model this by biasing the relatedness computation towards closer entities through a power function with
+parameter $\alpha$. The relatedness of a pair of words $w_1$ and $w_2$ is computed by using $weighted$ strategy:
 
 \begin{small}
     \begin{equation}
