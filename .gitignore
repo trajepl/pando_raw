@@ -18,6 +18,11 @@ experiment/src/entgraph/finish
 experiment/src/entgraph/merger
 experiment/src/measure/rg.csv.ret
 
+experiment/src-restructure/uri
+experiment/src-restructure/entity
+experiment/src-restructure/wd_set
+experiment/src-restructure/ent_set
+
 paper/latex/*
 !paper/latex/tex/
 !paper/latex/pic/
