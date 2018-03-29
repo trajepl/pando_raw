@@ -43,14 +43,15 @@
   \maketitle              % typeset the header of the contribution
   %
   \begin{abstract}
-    In this paper, we focus on computing semantic relatedness to get an approximation to human judgement.
-    We utilize the Knowledge Graph(DBPedia) which is derived from wikipedia as background knowledge.
-    For an input pair of words, we get two sets of corresponding entities in DBpedia.
-    Then we propose a model to extract a subgraph which contains complete information surrounding two sets of entities from DBPedia.
-    We use a method of knowledge graph embedding to train the subgraph to generate high-dimensional vector for each entity and relation. 
-    Finally, we get multiple relatedness scores after a full link between two sets of entities.
-    In order to better fit the judgement of human, we utilize a weighted strategy to combine
-    multiple relatedness scores of pairwise entities.
+    In this paper, we propose a model to compute semantic relatedness with the benefit of knowledge graph
+    such as DBPedia.
+    As the filiation of DBPedia, the wikipedia provides a so broad information coverage that many researches which
+    are based on wikipedia for computing semantic relatedness have obtained accurate results. However the wikipedia-based
+    methods usually require a significant preprocessing. In order to avoid the burden of preprocessing, some researchers
+    consider to utilize DBPedia to compute semantic relatedness. These researches
+    achieve great results which are on par with wikipedia-based methods. However, some of information in knowledge graph
+    is missed in the DBPedia-based researches. To get an approximation to human relatedness judgement, we propose a method which
+    utilizes the comparison of entities in knowledge graph to simulate semantic relatedness between words.
     The experiment based on gold dataset shows that our model outperforms the state-of-the-art model in semantic relatedness measurement.
   
   \keywords{Semantic Measure \and Semantic Relatedness \and Graph Embedding.}
