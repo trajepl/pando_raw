@@ -5,10 +5,10 @@ texts etc.) is a fundamental task for many applications in Natural Language
 Processing(NLP) such as lexicon induction\cite{aaai/QadirMGL15}, Named 
 Entity Disambiguation\cite{acl/HanZ10}, Keyword Extraction
 \cite{ijcai/ZhangFW13} and Information Retrieval\cite{acl/GurevychMZ07}. 
-Additionaly, computing semantic relatedness contributes other applications, 
-for example, opinion spam problem\cite{www/SandulescuE15}, image classification\cite{iwcs/LeongM11} and so on. 
-In this paper we focus on computing semantic relatedness between two 
-words in knowledge graph.
+Besides those NLP applications, in the aspect of opinion spam problem\cite{www/SandulescuE15}
+and image classification\cite{iwcs/LeongM11}, semantic relatedness measurement plays a great role as well. 
+% In this paper we focus on computing semantic relatedness between two 
+% words in knowledge graph.
 
 It has long been thought that when humans measure the relatedness between
 a pair of words, a deeper reasoning is triggered to compare the concepts
@@ -17,10 +17,9 @@ utilize different data sources. There are
 i) \emph{the large corpora}, such as wikipedia\cite{ijcai/GabrilovichM07},
 ii) \emph{the lexical databases}, such as WordNet\cite{acl/Pucher07} or Wikithionary\cite{aaai/ZeschMG08}, 
 iii) \emph{the knowledge graph}, such as DBpedia\cite{aaai/NavigliP12} or BabelNet\cite{aaai/NavigliP12}.
-With the development of knowledge representation, utilizing knowledge-rich resources to compute semantic 
-relatedness is a well-explored line of research. It is known to all that
-knowledge graph contains richer syntactic and semantic information than lexical databases,
-and more structured knowledge than the large corpora.
+In the past few years, With the development of knowledge representation, utilizing knowledge-rich resources to compute semantic 
+relatedness is a well-explored line of research because knowledge graph contains richer syntactic and semantic information
+than lexical databases, and more structured knowledge than the large corpora.
 On the account of advantages of knowledge graph, we utilize it as background 
 knowledge to compute semantic relatedness.
 
@@ -34,27 +33,19 @@ knowledge to compute semantic relatedness.
 
 Recently, there are some researchers having attached importance to measure semantic relatedness
 in knowledge graph\cite{acl/IacobacciPN15}, \cite{aaai/NavigliP12}, \cite{aaai/Pirro12}. 
-This paper \cite{acl/IacobacciPN15} leveraged entity linking to annotate the dump of wikipedia. Based on this,
-the sense-annotated corpus was generated. Then they\cite{acl/IacobacciPN15} used word2vec to
-train the sense-annotated corpus and got distributed representation of different 
-word senses. This step still needs a significant preprocessing and data transformation efforts. 
-As we can see that the author\cite{acl/IacobacciPN15} computed semantic relatedness on account of large corpora.
-They just put the knowledge graph on the position of support.
-Another paper\cite{aaai/NavigliP12} proposed a knowledge-rich approach to compute multilingual semantic
-relatedness which exploited the joint contribution of different languages. Given a pair of words 
-in two languages, they\cite{aaai/NavigliP12} utilized BabelNet to collect their translations and computed semantic
-relatedness in a variety of languages. Then they combined the empirical evidence from these 
-different languages by intersecting their respective graphs.
-Another work \cite{aaai/Pirro12} proposed an approach which exploited the graph nature of RDF and SPARQL query
-Language to access knowledge graph. It not only obtained the comparable
+The SensEmbed \cite{acl/IacobacciPN15} leveraged entity linking to annotate the dump of wikipedia,
+Then word2vec\cite{corr/Mikolov13} is used to train the sense-annotated wikipedia and they got distributed representation of different 
+word senses. Essentially this method is based on \emph{the large corpora} and needs a significant preprocessing
+and data transformation efforts. The knowledge graph plays a role of support network in SensEmbed.
+Another model BAbelRelated!\cite{aaai/NavigliP12} proposed a knowledge-rich approach to compute multilingual semantic
+relatedness which exploited the joint contribution of different languages. 
+The REWOrD \cite{aaai/Pirro12} is purely knowledge graph based model which proposed an approach which exploited 
+the graph nature of RDF and SPARQL query Language to access knowledge graph. It not only obtained the comparable
 result with the state-of-art model at that moment, but also avoided the burden
-of preprocessing and data transformation.
-
-Though the paper\cite{aaai/Pirro12} avoided a significant preprocessing and data
-transformation effort, and develops scalability of their approach while adopting 
-the knowledge graph. However, they missed some factors which
-might contribute to semantic relatedness measurement. Firstly, given two words
-as input, the first step is to find corresponding entities in knowledge
+of preprocessing and data transformation. Though REWOrD\cite{aaai/Pirro12} achieved great balance between
+semantic relatedness measurement and data preprocessing.
+However, they missed some factors which might contribute to semantic relatedness measurement. 
+Firstly, given two words as input, the first step is to find corresponding entities in knowledge
 graph. Obviously, there are usually more than one corresponding entities for a single word.
 For an input word \emph{car}, for example, we will get \emph{DBPedia:\footnote{http://dbpedia.org/resource}Automobile} and
 \emph{DBPedia:Auto\underline{\hspace{0.5em}}Racing} and so on. The work \cite{aaai/Pirro12} losed
@@ -65,9 +56,9 @@ the \emph{predicates} into account exclusively based on the TFIDF. This
 method ignored the function of \emph{objects} in a semantic triple.
 
 \begin{figure*}
-    \centering
+    \flushleft
     \includegraphics[width=1.1\textwidth]{pic/introduction.pdf}\\
-    \caption{Subgraph example in knowledge graph}
+    \caption{Subgraph in knowledge graph}
     \label{weak1}
 \end{figure*}
 
@@ -77,7 +68,7 @@ We can see that the entity \emph{Cat} plays the role
 of both \emph{Object(Cats contains Cat)} and \emph{Subject(Cat $p_1$ $E_1$)}
 in the pattern of triples. The \emph{predicate} which is connected with an entity(Cat)
 may be regarded as an outgoing($p_1$) or incoming \emph{predicate}($p_{_1}$).
-In the paper\cite{aaai/Pirro12}, the relatedness space for an entity ${E_i}$ is modelled as a 
+In REWOrD\cite{aaai/Pirro12}, the relatedness space for an entity ${E_i}$ is modelled as a 
 $k$-dimensional weighted vector \emph{V$_i$}, where each dimension represents
 the informativeness of a specific \emph{predicate}.
 For example, the weighted vector for \emph{Cat} is 
@@ -100,18 +91,17 @@ It is obvious that when they\cite{aaai/Pirro12} computed relatedness between \em
 they got the same vector value for predicate $p_1$ both in the aspect of \emph{Wolf} and \emph{Dog}.
 In other words, in the dimension of predicate $p_1$ vector between pair (\emph{Cat},\emph{Wolf}) and
 (\emph{Cat},\emph{Dog}), they got no difference. Accordingly, they did not distinguish the different
-objects for a specific predicate. In order to improve the performance of 
-semantic relatedness measurement based on knowledge graph, we propose a threefold model which is shown as follows:
+objects for a specific predicate. 
 
-1. For given a pair of words, the first job is to query the corresponding entities. In order to use the
+In order to improve the performance of semantic relatedness measurement based on knowledge graph, 
+we propose a threefold model which is shown as follows:
+1) For given a pair of words, the first job is to query the corresponding entities. In order to use the
 neural network for training the dataset, we also need to construct a graph which contains all related
 entities, attributes and relations between the corresponding entity pairs.
-
-2. We use Starspace proposed by Facebook for knowledge graph instead of Word2vec to train the subgraph
+2) We use Starspace proposed by Facebook for knowledge graph instead of Word2vec to train the subgraph
 extracted from the knowledge graph. Then we can get a distributional representation(vector) for each
 entity and predicate. 
-
-3. When we take as inputs a pair of words, we can get two sets of corresponding entities queried from
+3) When we take as inputs a pair of words, we can get two sets of corresponding entities queried from
 knowledge graph. Then we can get multiple relatedness scores after a full link between these two sets of entities.
 Inspired by \cite{acl/IacobacciPN15}, we utilize an approach to combine the 
 relatedness scores as the final semantic relatedness score in knowledge graph.
