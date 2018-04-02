@@ -22,6 +22,7 @@ experiment/src-restructure/uri
 experiment/src-restructure/entity
 experiment/src-restructure/wd_set
 experiment/src-restructure/ent_set
+experiment/src-restructure/mc/
 
 paper/latex/*
 !paper/latex/tex/
