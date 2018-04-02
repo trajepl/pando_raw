@@ -7,9 +7,11 @@ url = 'http://lookup.dbpedia.org/api/search/KeywordSearch'
 maxhist = 5
 
 def get_wd(fn):
+    wd_list = []
     with open(fn, 'r') as wd_read:
-        wd_list = wd_read.readlines()
-        return wd_list
+        for word in wd_read.readlines():
+            wd_list.append(word.strip().lower())
+    return wd_list
     
 def set_query(wd_list):
     candidate_set = set()
