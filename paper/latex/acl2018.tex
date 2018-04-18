@@ -23,7 +23,7 @@
   
   \begin{document}
   %
-  \title{Pando: Computing Semantic Relatedness in Knowledge Graph\thanks{Supported by organization x.}}
+  \title{SREC: Computing Semantic Relatedness based on Entity Comparison in Knowledge Graph\thanks{Supported by organization x.}}
   %
   %\titlerunning{Abbreviated paper title}
   % If the paper title is too long for the running head, you can set
@@ -43,15 +43,16 @@
   \maketitle              % typeset the header of the contribution
   %
   \begin{abstract}
-    In this paper, we propose a model to compute semantic relatedness with the benefit of knowledge graph
-    such as DBPedia.
-    As the filiation of DBPedia, the wikipedia provides a so broad information coverage that many researches which
-    are based on wikipedia for computing semantic relatedness have obtained accurate results. However the wikipedia-based
-    methods usually require a significant preprocessing. In order to avoid the burden of preprocessing, some researchers
-    consider to utilize DBPedia to compute semantic relatedness. These researches
-    achieve great results which are on par with wikipedia-based methods. However, some of information in knowledge graph
-    is missed on the DBPedia-based researches. To get an approximation to human relatedness judgement, we propose a method which
-    utilizes the comparison of entities in knowledge graph to simulate semantic relatedness between words.
+    In this paper, we propose a model to compute semantic relatedness based on entity comparison in knowledge graph.
+    Before the knowledge graph appeared, the wikipedia was the most frequently used knowledge resource,
+    as it can provide a so broad knowledge coverage that many researches which are based on wikipedia for computing semantic
+    relatedness have obtained more accurate results than those based on WordNet, search engines etc.
+    However the wikipedia-based methods usually require a significant preprocessing. 
+    In order to avoid the burden of preprocessing, some researchers consider to utilize knowledge graph to compute semantic relatedness.
+    These researches achieve great results which are on par with wikipedia-based methods. 
+    Deficiently, some of information in knowledge graph is missed in these researches. 
+    To get an approximation to human relatedness judgement more accurately, we propose a method which
+    utilizes the comparison of entities in knowledge graph. Our model considers more information to simulate semantic relatedness between words.
     The experiment based on gold dataset shows that our model outperforms the state-of-the-art model.
   
   \keywords{Semantic Measure \and Semantic Relatedness \and Graph Embedding.}
