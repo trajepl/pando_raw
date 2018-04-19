@@ -14,21 +14,21 @@ a deeper reasoning which requires a large amount of knowledge is triggered to co
 In the past years, many researchers have worked for semantic relatedness measurement and have made great achievements.
 From the aspect of data resources which they used, there are:
 i) \emph{The lexical databases} such as WordNet\cite{acl/Pucher07} or Wikithionary\cite{aaai/ZeschMG08} play a great part in
-relatedness measurement. This data resource can provies precise lexical information, but misses the semantic information.
+relatedness measurement. This data resource provides precise lexical information, but misses the semantic information.
 ii) WikiRelated\cite{aaai/StrubeP06}, ESA\cite{ijcai/GabrilovichM07}, WLM\cite{aaai/ZeschMG08} and so on exploit \emph{the large corpora wikipedia}
 to compute semantic relatedness. Wikipedia-based methods usually outperform the lexical-based methods, 
 because the wikipedia which is built artificially contains abundant semantic information. 
 iii) Recently, there are some researchers having attached importance to measure semantic relatedness
-in knowledge graph\cite{acl/IacobacciPN15}, \cite{aaai/NavigliP12}, \cite{aaai/Pirro12}. 
-The SensEmbed \cite{acl/IacobacciPN15} leveraged entity linking to annotate the dump of wikipedia,
+in knowledge graph. 
+The SensEmbed \cite{acl/IacobacciPN15} leveraged BabelNet\footnote{http://babelnet.org} to annotate the dump of wikipedia,
 and exploitd word2vec\cite{corr/Mikolov13} train the sense-annotated wikipedia to get distributed representation of different 
 word senses. Essentially this method is based on \emph{the large corpora} and needs a significant preprocessing
 and data transformation efforts. 
-Another model BabelRelated!\cite{aaai/NavigliP12} proposed a knowledge-rich approach to compute multilingual semantic
-relatedness which exploited the joint contribution of different languages. 
 The REWOrD \cite{aaai/Pirro12} is purely knowledge graph based model which proposed an approach which exploited 
 the graph nature of RDF and SPARQL query Language to access knowledge graph. It not only obtained the comparable
 result with the state-of-art model at that moment, but also avoided the burden of preprocessing and data transformation.
+% Another model BabelRelated!\cite{aaai/NavigliP12} proposed a knowledge-rich approach to compute multilingual semantic
+% relatedness which exploited the joint contribution of different languages. 
 
 \begin{figure*}
     \flushleft
@@ -44,29 +44,40 @@ Firstly given two words as input, the first step is to find corresponding entiti
 Obviously, there are usually more than one corresponding entities for a single word.
 As show in figure \ref{overview}, for an input word \emph{automobile}, for example, 
 we will get \emph{DBPedia:\footnote{http://dbpedia.org/resource}Automobile} and
-\emph{DBPedia:Auto\underline{\hspace{0.5em}}Racing} and so on. In the lower-left corner of figure \ref{overview}, 
-the REWOrD losed sight of the informativeness of the other entities, while they just
-consider the entity with the highest rank. Secondly, REWOrD misseed
-some informativeness of \emph{objects} in \emph{triple(subject, prediacte, object)} because their strategy just
-took the \emph{predicates} into account with statistics of frequencies based on the TFIDF exclusively. This
-method ignored the function of \emph{objects} in a semantic triple.
+\emph{DBPedia:Auto\underline{\hspace{0.5em}}Racing}, \emph{DBPdedia:Ferry} and so on.
+From the lower-left corner of figure \ref{overview}, we can see that the REWOrD losed sight of
+the informativeness of the other entities, while they just consider the entity with the highest rank.
+Secondly, REWOrD misseed some informativeness of \emph{objects} in \emph{triple(subject, prediacte, object)}
+because their strategy just took the \emph{predicates} into account with statistics of frequencies based on the TFIDF exclusively.
+This method ignored the information hidden in \emph{objects} in a semantic triple.
 
 %阐述我们的model%
+To get an approximation to human relatedness judgement more accurately and exploit more knowledge implied in knowledge graph,
+we propose an improved model based on entity comparison in knowledge graph. 
+As show in figure \ref{overview}, given two words in input, the first step is to get entities that better associated with 
+the concepts triggered by input words. To this end we rely on lookup services provided by DBPdedia which is used in REWOrD as well. 
+In contrast to REWOrD, we consider multiple entities associated with input words rather than just one with hightst rank.
+Along with the idea which transform the entities to vector which can be compared easily, we need to get the vectorization representation
+of entities. However, traditional statistical analysis methods used in REWOrD can not consider both knowledge hidden in \emph{predicates}
+and \emph{objects} in semantic triple. To make up this weakness, we use graph embedding to train the dataset which contains subgraphs
+extracted from knowledge graph. Due to the huge amounts of data in knowledge graph, it is difficult to extract the minimal subgraph which
+can describe the entities accurately. We do this by building a directed graph which contains all relevant entities and attributes which
+discribe the entities set. After training and computing the distance between vectors, we can get multiple relatedness scores.
+We use two \emph{weighted} strategy to combine the relatedness scores as the final semantic relatedness score. Experimental
+results show that our model outperforms the REWOrD and some of other wikipedia-based methods.
 
-In order to improve the performance of semantic relatedness measurement based on knowledge graph, 
-we propose a threefold model which is shown as follows:
-1) For given a pair of words, the first job is to query the corresponding entities. In order to use the
-neural network for training the dataset, we also need to construct a graph which contains all related
+In this paper, we propose a threefold model.
+
+i) Given a pair of words, the first job is to query the corresponding entities. In order to use the
+embedding technique to train the dataset, we construct a graph which contains all related
 entities, attributes and relations between the corresponding entity pairs.
 
-2) We use Starspace proposed by Facebook for knowledge graph instead of Word2vec to train the subgraph
+ii) We exploit embedding technique for knowledge graph instead of Word2vec to train the subgraph
 extracted from the knowledge graph. Then we can get a distributional representation(vector) for each
-entity and predicate. 
+entity and predicate.
 
-3) When we take as inputs a pair of words, we can get two sets of corresponding entities queried from
-knowledge graph. Then we can get multiple relatedness scores after a full link between these two sets of entities.
-Inspired by \cite{acl/IacobacciPN15}, we utilize an approach to combine the 
-relatedness scores as the final semantic relatedness score in knowledge graph.
+iii) We can get multiple relatedness scores after a full link between these two sets of entities.
+Inspired by \cite{acl/IacobacciPN15}, we utilize an approach to combine the relatedness scores as the final semantic relatedness score.
 
 This paper is organized as follows. We give the related work about semantic relatedness
 measurement in section \ref{related-word}. Then we elaborate the threefold model for
