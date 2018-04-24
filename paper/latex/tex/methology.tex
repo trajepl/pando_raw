@@ -1,5 +1,30 @@
-\section{Methodlogy}
-\label{methodlogy}
+\section{Methodology}
+\label{methodology}
+
+\begin{algorithm}
+	\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+	\renewcommand{\algorithmicensure}{\textbf{Output:}}
+	\caption{SREC}
+	\label{alg:1}
+    \begin{algorithmic}[1]
+        \REQUIRE a set of words pairs $\{(w_1, w_2)\}$
+        \ENSURE a semantic relatedness score $sr \in [0,1]$
+        \STATE initialize entites set ${E_{w_1}}$, ${E_{w_2}}$ empty
+        \STATE initialize the minimal subgraph $graph\_ent$ that describes entites pairs $<e_1,e_2>$
+        \STATE initialize the vector set $vector\_ent\_set$ that represents entites set ${E_{w_1}}$, ${E_{w_2}}$
+        \STATE initialize the vector set $scores\_set$ that record multiple semantic relatedness sorces 
+        \STATE ${E_{w_1}} \leftarrow query\_lookup(w_1)$; ${E_{w_2}} \leftarrow query\_lookup(w_2)$
+        \FOR  {$e_1 \in E_{w_1}, e_2 \in E_{w_2} $}
+        \STATE $graph\_ent \leftarrow query\_spqrql(e_1, e_2)$ (updating)
+        \STATE $vector\_ent\_set \leftarrow embedding(graph\_ent)$
+        \STATE $v_{e_1} \leftarrow find(e_1, vector\_ent\_set)$; $v_{e_2} \leftarrow find(e_2, vector\_ent\_set)$
+        \STATE $scores\_set.append(e_1, e_2, cos(v_{e_1}, v_{e_2}))$
+        \ENDFOR
+        \STATE $sr \leftarrow weighted(scores\_set)$
+		\STATE \textbf{return} $r$
+	\end{algorithmic}  
+\end{algorithm}
+
 In order to compute semantic relatedness of a pair of words, we propose a model which is
 threefold. 
 For a given pair of words, we first query the corresponding entities in knowledge graph.
@@ -10,6 +35,22 @@ In our method, we use cosine function to compare vectors corresponding to word p
 Besides, in the query step, we would get several corresponding entities for an input word. Inspired by
 the SenseEmbed\cite{acl/IacobacciPN15}, we combine the relatedness scores computed from the multiple pairs of entities 
 as the final measure sorce between two words.
+
+\subsection{Construct graph}
+\label{sec:construct graph}
+Our aim is to compute the semantic relatedness between a pair of words. The process of relatedness measure
+needs complete and ample background knowledge which can be gathered from knowledge graph, such as
+DBPedia\footnote{http://wiki.dbpedia.org/}, 
+YAGO\footnote{https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/yago} etc.
+The first problem we face is how to obtain knowledge which is associated with given words from knowledge graph. 
+In our model, we utilize the DBPedia as our knowledge base to gather corresponding entities triggered by the given words.
+We rely on lookup service\footnote{http://lookup.dbpedia.org/api/search/KeywordSearch} that is provided by DBPedia to achieve this object. 
+We use $W_{w_i}$ to denote the set of corresponding entities in knowledge graph when we complete a query by word $w_i$.
+Then we get $W_{w_i}=\{E_1,...,E_k\}$ where $E_i$ is the $i_{th}$ query entity associated with the given word.
+As show in Table \ref{entities}, for a given word pair \emph{(automobile,car)}, 
+we can get the appropriate entities which are described as URIs in DBPedia. 
+These URIs describe entities so accurate that we can access knowledge graph using powerful
+query language SPARQL\footnote{https://www.w3.org/TR/sparql11-overview/} to get everything we want.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -32,21 +73,6 @@ as the final measure sorce between two words.
     }
 \end{table*}
 
-\subsection{Construct graph}
-\label{sec:construct graph}
-Our aim is to compute the semantic relatedness between a pair of words. The process of relatedness measure
-needs complete and ample background knowledge which can be gathered from knowledge graph, such as
-DBPedia\footnote{http://wiki.dbpedia.org/}, 
-YAGO\footnote{https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/yago} etc.
-The first problem we face is how to obtain knowledge which is associated with given words from knowledge graph. 
-In our model, we utilize the DBPedia as our knowledge base to gather corresponding entities triggered by the given words.
-We rely on lookup service\footnote{http://lookup.dbpedia.org/api/search/KeywordSearch} that is provided by DBPedia to achieve this object. 
-We use $W_{w_i}$ to denote the set of corresponding entities in knowledge graph when we complete a query by word $w_i$.
-Then we get $W_{w_i}=\{E_1,...,E_k\}$ where $E_i$ is the $i_{th}$ query entity associated with the given word.
-As show in Table \ref{entities}, for a given word pair \emph{(automobile,car)}, 
-we can get the appropriate entities which are described as URIs in DBPedia. 
-These URIs describe entities so accurate that we can access knowledge graph using powerful
-query language SPARQL\footnote{https://www.w3.org/TR/sparql11-overview/} to get everything we want.
 
 % sparql query norm for graph construction
 
