@@ -85,13 +85,57 @@ def get_ent_embedding(fn):
             vec = [float(x) for x in line[1:]]
             ent_embedding[key] = vec
 
+# measure begin-----------------------
 def cosine(v1, v2):
     n1 = np.linalg.norm(v1)
     n2 = np.linalg.norm(v2)
+    if n1 == 0 or n2 == 0:
+        return 0
     ip = np.dot(v1, v2)
     return float(ip / (n1 * n2))
 
-def closest_strategy(word_pair, uri_dict, notexist_out):
+def jaccard(v1, v2):
+    ip = np.dot(v1, v2)
+    n1 = np.linalg.norm(v1, 2)
+    n2 = np.linalg.norm(v2, 2)
+    return float(ip / (n1 + n2 - ip))
+
+def spearman():
+    pass
+
+def get_sr(fn):
+    sr_list = []
+    with open(fn, 'r') as sr_in:
+        for line in sr_in.readlines():
+            line = line.strip().split(';')
+            sr_list.append(float(line[-1]))
+    sum_sr = sum(sr_list)
+    if sum_sr == 0:
+        sum_sr = 1e-10
+    for i in range(len(sr_list)):
+        sr_list[i] = sr_list[i] / sum_sr
+    return sr_list
+
+def pearson(v1, v2):
+    v1_avg = float(sum(v1)) / len(v1)
+    v2_avg = float(sum(v2)) / len(v2)
+
+    head, tail1, tail2 = 1e-10, 1e-10, 1e-10
+    for i in range(len(v2)):
+        v1_d = v1[i] - v1_avg
+        v2_d = v2[i] - v2_avg
+        head += v1_d * v2_d
+        tail1 += v1_d * v1_d
+        tail2 += v2_d * v2_d
+    return head / (math.sqrt(tail1) * math.sqrt(tail2))
+
+def cc(v1, v2):
+    vc = np.array(v1)
+    vb = np.array(v2)
+    return np.mean(np.multiply((vc - np.mean(vc)),(vb - np.mean(vb))))/(np.std(vb) * np.std(vc))
+# measure end-----------------------
+
+def closest_strategy(word_pair, uri_dict, notexist_out, func_dis):
     cnt = 0;
     closet_val = 0
     w1 = word_pair[0].lower()
@@ -105,7 +149,7 @@ def closest_strategy(word_pair, uri_dict, notexist_out):
             sr_val = 0
             if e1 in ent_embedding and e2 in ent_embedding:
                 # print(e1 + ' ' + w1 + ' ' + e2)
-                sr_val = cosine(ent_embedding[e1], ent_embedding[e2])
+                sr_val = abs(func_dis(ent_embedding[e1], ent_embedding[e2]))
             else:
                 if not e1 in ent_embedding:
                     notexist_out.write(w1 + ':' + e1 + '\n')
@@ -114,7 +158,7 @@ def closest_strategy(word_pair, uri_dict, notexist_out):
             closet_val = max(closet_val, sr_val)
     return closet_val
 
-def weighted_strategy(word_pair, uri_dict):
+def weighted_strategy(word_pair, uri_dict, alpha, func_dis):
     def sum_ref(e):
         ret = 0
         for item in e:
@@ -130,118 +174,98 @@ def weighted_strategy(word_pair, uri_dict):
     ref_sum1 = sum_ref(ent1)
     ref_sum2 = sum_ref(ent2)
     weighted_val = 0
-    max_alpha = 1
-    for alpha in range(1, 11):
-        weighted_val_t = 0
-        for e1 in ent1:
-            for e2 in ent2:
-                if e1[0] in ent_embedding and e2[0] in ent_embedding:
-                    cosine_val = cosine(ent_embedding[e1[0]], ent_embedding[e2[0]])
-                    weighted_val_t += (e1[1] / ref_sum1) * (e2[1] / ref_sum2) * pow(cosine_val, alpha)
-        if weighted_val_t > weighted_val:
-            weighted_val = weighted_val_t
-            max_alpha = alpha
-    
-    print_log('result/log', str(max_alpha) + ' ' +  str(weighted_val) + ' ' + w1 + '-' + w2 + '\n')
+    for e1 in ent1:
+        for e2 in ent2:
+            if e1[0] in ent_embedding and e2[0] in ent_embedding:
+                cosine_val = abs(func_dis(ent_embedding[e1[0]], ent_embedding[e2[0]]))
+                weighted_val += (e1[1] / ref_sum1) * (e2[1] / ref_sum2) * pow(cosine_val, alpha)   
+    # print_log('result/log', str(max_alpha) + ' ' +  str(weighted_val) + ' ' + w1 + '-' + w2 + '\n')
     return weighted_val
 
-@run_time
-def measure(data_dict, uri_dict):
+def measure_closest(data_dict, uri_dict, func_dis):
     notexist_out = open('result/notexist', 'w')
     for dataset, word_pairs in data_dict.items():
-        with open(os.path.join('result', dataset), 'w') as data_out:
+        fn = 'closest_' + func_dis.__name__ + '_' + dataset
+        with open(os.path.join('result', fn), 'w') as data_out:
             for word_pair in word_pairs.keys():
                 word_pair = word_pair.split(':')
-                closest_val = closest_strategy(word_pair, uri_dict, notexist_out)
-                weighted_val = weighted_strategy(word_pair, uri_dict)
-                str_t = ';'.join([word_pair[0], word_pair[1], str(closest_val), str(weighted_val)])
+                closest_val = closest_strategy(word_pair, uri_dict, notexist_out, func_dis)
+                str_t = ';'.join([word_pair[0], word_pair[1], str(closest_val)])
                 data_out.write(str_t + '\n')
     notexist_out.close()
 
-def spearman():
-    pass
+def measure_weighted_cc(root_path, data_dict, uri_dict, func_dis):
+    for dataset, word_pairs in data_dict.items():
+        fn = 'weighted_' + func_dis.__name__ + '_' + dataset
+        with open(os.path.join('result', fn), 'w') as data_out:
+            max_alpha = 0
+            max_weighted_sr = []
+            p_val = 0
+            for alpha in range(1, 11):
+                weighted_sr = []
+                for word_pair in word_pairs.keys():
+                    word_pair = word_pair.split(':')
+                    weighted_sr.append([word_pair[0], word_pair[1], weighted_strategy(word_pair, uri_dict, alpha, func_dis)])
+                std_sr = get_sr(os.path.join(root_path, dataset))                
+                p_tmp = pearson(std_sr, [sr[-1] for sr in weighted_sr])
+                if p_val < p_tmp:
+                    p_val = p_tmp
+                    max_alpha = alpha
+                    max_weighted_sr = weighted_sr
+            for item in max_weighted_sr:
+                str_t = ';'.join([item[0], item[1], str(max_alpha), str(item[2])])
+                data_out.write(str_t + '\n')
 
-def get_sr(fn):
-    flag = True
-    sr_list1 = []
-    with open(fn, 'r') as sr_in:
-        sr_list2 = [[],[]]
-        for line in sr_in.readlines():
-            line = line.strip().split(';')
-            if len(line) > 3:
-                flag = False
-                sr_list2[0].append(line[-2])
-                sr_list2[1].append(line[-1])
-            else:
-                sr_list1.append(line[-1])
-    if flag:
-        return sr_list1
-    else:
-        return sr_list2
-
-def pearson(v1, v2):
-    v1_avg = float(sum(v1)) / len(v1)
-    v2_avg = float(sum(v2)) / len(v2)
-
-    head, tail1, tail2 = 1e-10, 1e-10, 1e-10
-    for i in range(len(v2)):
-        v1_d = v1[i] - v1_avg
-        v2_d = v2[i] - v2_avg
-        head += v1_d * v2_d
-        tail1 += v1_d * v1_d
-        tail2 += v2_d * v2_d
-    return head / (math.sqrt(tail1) * math.sqrt(tail2))
-
-def cc_scores(root_dir, ret_path):
+def cc_scores(root_dir, ret_path, way, func_cc):
     stand_sr = {}
     for dataset in os.listdir(root_dir):
         stand_sr[dataset] = []
         fn = os.path.join(root_dir, dataset)
-        with open(fn, 'r') as sr_in:
-            for line in sr_in.readlines():
-                line = line.strip().split(';')
-                val = float(line[-1])
-                if not 'wordsim' in dataset:
-                    val = val * 4
-                else:
-                    val = val / 10
-                stand_sr[dataset].append(val)
+        stand_sr[dataset] = get_sr(fn)
     
-    test_sr_closest = {}
-    test_sr_weighted = {}
+    test_sr = {}
     for dataset in os.listdir(ret_path):
-        if not dataset.endswith('csv'):
-            continue
-        test_sr_closest[dataset] = []
-        test_sr_weighted[dataset] = []
-        fn = os.path.join(ret_path, dataset)
-        with open(fn, 'r') as sr_in:
-            for line in sr_in.readlines():
-                line = line.strip().split(';')
-                test_sr_closest[dataset].append(abs(float(line[-2])))
-                test_sr_weighted[dataset].append(abs(float(line[-1])))
+        if dataset.endswith('csv') and dataset.startswith(way):
+            fn = os.path.join(ret_path, dataset)
+            dataset = dataset.split('_')[-1]
+            test_sr[dataset] = get_sr(fn)
     
     for key in stand_sr.keys():
         print(key + ':', end = ' ')
-        print(pearson(stand_sr[key], test_sr_closest[key]), end = ' ')
-        print(pearson(stand_sr[key], test_sr_weighted[key]))
+        print(func_cc(stand_sr[key], test_sr[key]))
         
-
 def run():
-    root_dat = '../dataset'
-    # data_dict = get_word_pairs(root_dat)
-    # # print(data_dict)
-
-    # uri_path = 'uri/'
-    # uri_dict = get_uri(uri_path)
-    # # print(uri_dict)
-
-    # embedding_path = 'merger.tsv'
-    # get_ent_embedding(embedding_path)
-    # measure(data_dict, uri_dict)
-
     ret_path = 'result/'
-    cc_scores(root_dat, ret_path)
+
+    root_dat = '../dataset'
+    data_dict = get_word_pairs(root_dat)
+    # print(data_dict)
+
+    uri_path = 'uri/'
+    uri_dict = get_uri(uri_path)
+    # print(uri_dict)
+
+    embedding_path = 'merger.tsv'
+    get_ent_embedding(embedding_path)
+
+    print("(cosine) closest strategy--------------")
+    measure_closest(data_dict, uri_dict, cosine)
+    cc_scores(root_dat, ret_path, 'closest', pearson)
+    # cc_scores(root_dat, ret_path, cc)
+
+    print("(cosine) weighted strategy-------------")
+    measure_weighted_cc(root_dat, data_dict, uri_dict, cosine)
+    cc_scores(root_dat, ret_path, 'weighted', pearson)
+    print()
+
+    print("(jaccard) closest strategy--------------")
+    measure_closest(data_dict, uri_dict, jaccard)
+    cc_scores(root_dat, ret_path, 'closest', pearson)
+    # cc_scores(root_dat, ret_path, cc)
+
+    print("(jaccard) weighted strategy-------------")
+    measure_weighted_cc(root_dat, data_dict, uri_dict, jaccard)
+    cc_scores(root_dat, ret_path, 'weighted', pearson)
 
 if __name__ == '__main__':
     run()
