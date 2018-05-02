@@ -25,7 +25,7 @@ experiment/src-restructure/ent_set
 experiment/src-restructure/mc/
 experiment/src-restructure/data/
 experiment/src-restructure/result/
-
+experiment/src-restructure/merger.tsv
 
 paper/latex/*
 paper/latex/pic/overview-eps-converted-to.pdf
