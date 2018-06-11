@@ -27,6 +27,10 @@ experiment/src-restructure/data/
 experiment/src-restructure/result/
 experiment/src-restructure/merger.tsv
 
+experiment/src-entity-cluster/__pycache__
+experiment/src-entity-cluster/uri
+experiment/src-entity-cluster/uri_full
+
 paper/latex/*
 paper/latex/pic/overview-eps-converted-to.pdf
 !paper/latex/tex/
