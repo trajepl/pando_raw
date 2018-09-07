@@ -1,0 +1,66 @@
+\def\year{2019}\relax
+%File: formatting-instruction.tex
+\documentclass[letterpaper]{article} %DO NOT CHANGE THIS
+\usepackage{aaai19}  %Required
+\usepackage{times}  %Required
+\usepackage{helvet}  %Required
+\usepackage{courier}  %Required
+\usepackage{url}  %Required
+\usepackage{graphicx}  %Required
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{amsfonts}
+% \usepackage{float}
+\usepackage{subfigure}
+% \usepackage{latexsym}
+\usepackage{amsmath}
+\frenchspacing  %Required
+\setlength{\pdfpagewidth}{8.5in}  %Required
+\setlength{\pdfpageheight}{11in}  %Required
+%PDF Info Is Required:
+  \pdfinfo{
+/Title (2019 Formatting Instructions for Authors Using LaTeX)
+/Author (AAAI Press Staff)}
+\setcounter{secnumdepth}{0}  
+ \begin{document}
+% The file aaai.sty is the style file for AAAI Press 
+% proceedings, working notes, and technical reports.
+%
+\title{Knowledge Association Network for Measuring Semantic Relatedness}
+\author{
+}
+\maketitle              % typeset the header of the contribution
+  %
+  \begin{abstract}
+    Measuring semantic relatedness between two words is a fundamental task for many applications in Natural Language
+    Processing(NLP). Conventional methods mainly utilize the latent semantic hidden in lexical database(WordNet) or text corpus(Wikipedia).
+    They make great achievements based on the distance computing in lexical tree or co-occurrence principle in Wikipedia.
+    However these methods suffer from low coverage and low precision because
+    1) lexical database contains abundant lexical information but lacks the semantic information;
+    2) in Wikipedia, two related words may not appear in a window size e.g. synonyms, and two unrelated words may 
+    be mentioned together by chance. To compute semantic relatedness more accurately, some other approaches make great efforts
+    based on free association network and get an significant improvement on relatedness measurement. Nevertheless,
+    they need complex preprocessing in Wikipedia. Besides, the fixed score functions they adopt cause the lack of
+    flexibility and expressiveness of model. 
+    In this paper, we explore knowledge graph(DBPedia) and wikipedia to construct a knowledge association network which avoids the
+    preprocessing of Wikipedia. And we use distributed vectors instead of fixed score functions to represent the attributes
+    and topological structure of our network respectively. The experiment based on gold dataset shows that our model outperforms
+    the state-of-the-art models.
+
+    % Measuring semantic relatedness between two words is a fundamental task for many applications in Natural Language Processing(NLP). Conventional methods mainly utilize the latent semantic hidden in lexical database(WordNet) or text corpus(Wikipedia). The methods based on lexical database measure the relatedness between two words using fixed semantic, such as the distance between them or the nearest parent node they share. The Wikipedia-based methods regard two words highly related if they appear in a special window size(co-occurrence principle). Such methods suffer from low coverage and low precision because 1) lexical database contains abundant lexical information but lacks the semantic information; 2) In co-occurrence principle of Wikipedia, two related words may not appear in a window size e.g. synonyms, and two unrelated words may be mentioned together by chance. To compute semantic relatedness more accurately, we explore the latent semantics in knowledge graph(DBPedia) and construct a knowledge association network. We use distributed vectors to represent the attributes and topological structure of such network respectively. The experiment based on gold dataset shows that our model outperforms the state-of-the-art models.
+
+  \end{abstract}
+
+  \input{tex/introduction}
+  \input{tex/kan}
+  \input{tex/sr}
+  \input{tex/experiment}
+  % \input{tex/relatedwork}
+  \input{tex/conclusion}
+  
+  \bibliographystyle{aaai}
+  \bibliography{aaai19}
+  \end{document}

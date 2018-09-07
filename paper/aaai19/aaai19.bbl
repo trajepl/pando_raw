@@ -1,0 +1,213 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Agirre \bgroup et al\mbox.\egroup
+  }{2009}]{ws/AgirreAHKPS09}
+Agirre, E.; Alfonseca, E.; Hall, K.~B.; Kravalova, J.; Pasca, M.; and Soroa, A.
+\newblock 2009.
+\newblock A study on similarity and relatedness using distributional and
+  wordnet-based approaches.
+\newblock In {\em Human Language Technologies: Conference of the North American
+  Chapter of the Association of Computational Linguistics, Proceedings, May 31
+  - June 5, 2009, Boulder, Colorado, {USA}},  19--27.
+
+\bibitem[\protect\citeauthoryear{Bordes \bgroup et al\mbox.\egroup
+  }{2013}]{nips/BordesUGWY13}
+Bordes, A.; Usunier, N.; Garc{\'{\i}}a{-}Dur{\'{a}}n, A.; Weston, J.; and
+  Yakhnenko, O.
+\newblock 2013.
+\newblock Translating embeddings for modeling multi-relational data.
+\newblock In {\em Advances in Neural Information Processing Systems 26: 27th
+  Annual Conference on Neural Information Processing Systems 2013. Proceedings
+  of a meeting held December 5-8, 2013, Lake Tahoe, Nevada, United States.},
+  2787--2795.
+
+\bibitem[\protect\citeauthoryear{Gabrilovich and
+  Markovitch}{2007}]{ijcai/GabrilovichM07}
+Gabrilovich, E., and Markovitch, S.
+\newblock 2007.
+\newblock Computing semantic relatedness using wikipedia-based explicit
+  semantic analysis.
+\newblock In {\em {IJCAI} 2007, Proceedings of the 20th International Joint
+  Conference on Artificial Intelligence, Hyderabad, India, January 6-12, 2007},
+   1606--1611.
+
+\bibitem[\protect\citeauthoryear{Gong, Xu, and Huang}{2018}]{aaai/GongXH18}
+Gong, X.; Xu, H.; and Huang, L.
+\newblock 2018.
+\newblock {HAN:} hierarchical association network for computing semantic
+  relatedness.
+\newblock In {\em Proceedings of the Thirty-Second {AAAI} Conference on
+  Artificial Intelligence, New Orleans, Louisiana, USA, February 2-7, 2018}.
+
+\bibitem[\protect\citeauthoryear{Grover and Leskovec}{2016}]{kdd/GroverL16}
+Grover, A., and Leskovec, J.
+\newblock 2016.
+\newblock node2vec: Scalable feature learning for networks.
+\newblock In {\em Proceedings of the 22nd {ACM} {SIGKDD} International
+  Conference on Knowledge Discovery and Data Mining, San Francisco, CA, USA,
+  August 13-17, 2016},  855--864.
+
+\bibitem[\protect\citeauthoryear{Gurevych, M{\"{u}}ller, and
+  Zesch}{2007}]{acl/GurevychMZ07}
+Gurevych, I.; M{\"{u}}ller, C.; and Zesch, T.
+\newblock 2007.
+\newblock What to be? - electronic career guidance based on semantic
+  relatedness.
+\newblock In {\em {ACL} 2007, Proceedings of the 45th Annual Meeting of the
+  Association for Computational Linguistics, June 23-30, 2007, Prague, Czech
+  Republic}.
+
+\bibitem[\protect\citeauthoryear{Han and Zhao}{2010}]{acl/HanZ10}
+Han, X., and Zhao, J.
+\newblock 2010.
+\newblock Structural semantic relatedness: {A} knowledge-based method to named
+  entity disambiguation.
+\newblock In {\em {ACL} 2010, Proceedings of the 48th Annual Meeting of the
+  Association for Computational Linguistics, July 11-16, 2010, Uppsala,
+  Sweden},  50--59.
+
+\bibitem[\protect\citeauthoryear{Hassan and Mihalcea}{2011}]{aaai/HassanM11}
+Hassan, S., and Mihalcea, R.
+\newblock 2011.
+\newblock Semantic relatedness using salient semantic analysis.
+\newblock In {\em Proceedings of the Twenty-Fifth {AAAI} Conference on
+  Artificial Intelligence, {AAAI} 2011, San Francisco, California, USA, August
+  7-11, 2011}.
+
+\bibitem[\protect\citeauthoryear{Iacobacci, Pilehvar, and
+  Navigli}{2015}]{acl/IacobacciPN15}
+Iacobacci, I.; Pilehvar, M.~T.; and Navigli, R.
+\newblock 2015.
+\newblock Sensembed: Learning sense embeddings for word and relational
+  similarity.
+\newblock In {\em Proceedings of the 53rd Annual Meeting of the Association for
+  Computational Linguistics and the 7th International Joint Conference on
+  Natural Language Processing of the Asian Federation of Natural Language
+  Processing, {ACL} 2015, July 26-31, 2015, Beijing, China, Volume 1: Long
+  Papers},  95--105.
+
+\bibitem[\protect\citeauthoryear{Leong and Mihalcea}{2011}]{iwcs/LeongM11}
+Leong, C.~W., and Mihalcea, R.
+\newblock 2011.
+\newblock Measuring the semantic relatedness between words and images.
+\newblock In {\em Proceedings of the Ninth International Conference on
+  Computational Semantics, {IWCS} 2011, January 12-14, 2011, Oxford, {UK}}.
+
+\bibitem[\protect\citeauthoryear{Mikolov \bgroup et al\mbox.\egroup
+  }{2013}]{corr/Mikolov13}
+Mikolov, T.; Chen, K.; Corrado, G.; and Dean, J.
+\newblock 2013.
+\newblock Efficient estimation of word representations in vector space.
+\newblock {\em CoRR} abs/1301.3781.
+
+\bibitem[\protect\citeauthoryear{Pennington, Socher, and
+  Manning}{2014}]{emnlp/PenningtonSM14}
+Pennington, J.; Socher, R.; and Manning, C.~D.
+\newblock 2014.
+\newblock Glove: Global vectors for word representation.
+\newblock In {\em Proceedings of the 2014 Conference on Empirical Methods in
+  Natural Language Processing, {EMNLP} 2014, October 25-29, 2014, Doha, Qatar,
+  {A} meeting of SIGDAT, a Special Interest Group of the {ACL}},  1532--1543.
+
+\bibitem[\protect\citeauthoryear{Perozzi, Al-Rfou, and
+  Skiena}{2014}]{kdd/Perozzi14}
+Perozzi, B.; Al-Rfou, R.; and Skiena, S.
+\newblock 2014.
+\newblock Deepwalk: Online learning of social representations.
+\newblock In {\em Proceedings of the 20th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, KDD '14,  701--710.
+\newblock ACM.
+
+\bibitem[\protect\citeauthoryear{Pirr{\`{o}}}{2012}]{aaai/Pirro12}
+Pirr{\`{o}}, G.
+\newblock 2012.
+\newblock Reword: Semantic relatedness in the web of data.
+\newblock In {\em Proceedings of the Twenty-Sixth {AAAI} Conference on
+  Artificial Intelligence, July 22-26, 2012, Toronto, Ontario, Canada.}
+
+\bibitem[\protect\citeauthoryear{Pucher}{2007}]{acl/Pucher07}
+Pucher, M.
+\newblock 2007.
+\newblock Wordnet-based semantic relatedness measures in automatic speech
+  recognition for meetings.
+\newblock In {\em {ACL} 2007, Proceedings of the 45th Annual Meeting of the
+  Association for Computational Linguistics, June 23-30, 2007, Prague, Czech
+  Republic}.
+
+\bibitem[\protect\citeauthoryear{Qadir \bgroup et al\mbox.\egroup
+  }{2015}]{aaai/QadirMGL15}
+Qadir, A.; Mendes, P.~N.; Gruhl, D.; and Lewis, N.
+\newblock 2015.
+\newblock Semantic lexicon induction from twitter with pattern relatedness and
+  flexible term length.
+\newblock In {\em Proceedings of the Twenty-Ninth {AAAI} Conference on
+  Artificial Intelligence, January 25-30, 2015, Austin, Texas, {USA.}},
+  2432--2439.
+
+\bibitem[\protect\citeauthoryear{Sandulescu and
+  Ester}{2015}]{www/SandulescuE15}
+Sandulescu, V., and Ester, M.
+\newblock 2015.
+\newblock Detecting singleton review spammers using semantic similarity.
+\newblock In {\em Proceedings of the 24th International Conference on World
+  Wide Web Companion, {WWW} 2015, Florence, Italy, May 18-22, 2015 - Companion
+  Volume},  971--976.
+
+\bibitem[\protect\citeauthoryear{Strube and Ponzetto}{2006}]{aaai/StrubeP06}
+Strube, M., and Ponzetto, S.~P.
+\newblock 2006.
+\newblock Wikirelate! computing semantic relatedness using wikipedia.
+\newblock In {\em Proceedings, The Twenty-First National Conference on
+  Artificial Intelligence and the Eighteenth Innovative Applications of
+  Artificial Intelligence Conference, July 16-20, 2006, Boston, Massachusetts,
+  {USA}},  1419--1424.
+
+\bibitem[\protect\citeauthoryear{Wu and Giles}{2015}]{aaai/WuG15}
+Wu, Z., and Giles, C.~L.
+\newblock 2015.
+\newblock Sense-aaware semantic analysis: {A} multi-prototype word
+  representation model using wikipedia.
+\newblock In {\em Proceedings of the Twenty-Ninth {AAAI} Conference on
+  Artificial Intelligence, January 25-30, 2015, Austin, Texas, {USA.}},
+  2188--2194.
+
+\bibitem[\protect\citeauthoryear{Wu \bgroup et al\mbox.\egroup
+  }{2017}]{corr/Ledell17}
+Wu, L.; Fisch, A.; Chopra, S.; Adams, K.; Bordes, A.; and Weston, J.
+\newblock 2017.
+\newblock Starspace: Embed all the things!
+\newblock {\em CoRR} abs/1709.03856.
+
+\bibitem[\protect\citeauthoryear{Zesch, M{\"{u}}ller, and
+  Gurevych}{2008}]{aaai/ZeschMG08}
+Zesch, T.; M{\"{u}}ller, C.; and Gurevych, I.
+\newblock 2008.
+\newblock Using wiktionary for computing semantic relatedness.
+\newblock In {\em Proceedings of the Twenty-Third {AAAI} Conference on
+  Artificial Intelligence, {AAAI} 2008, Chicago, Illinois, USA, July 13-17,
+  2008},  861--866.
+
+\bibitem[\protect\citeauthoryear{Zhang, Feng, and Wang}{2013}]{ijcai/ZhangFW13}
+Zhang, W.; Feng, W.; and Wang, J.
+\newblock 2013.
+\newblock Integrating semantic relatedness and words' intrinsic features for
+  keyword extraction.
+\newblock In {\em {IJCAI} 2013, Proceedings of the 23rd International Joint
+  Conference on Artificial Intelligence, Beijing, China, August 3-9, 2013},
+  2225--2231.
+
+\bibitem[\protect\citeauthoryear{Zhang, Zhu, and Hwang}{2015}]{aaai/ZhangZH15}
+Zhang, K.; Zhu, K.~Q.; and Hwang, S.
+\newblock 2015.
+\newblock An association network for computing semantic relatedness.
+\newblock In {\em Proceedings of the Twenty-Ninth {AAAI} Conference on
+  Artificial Intelligence, January 25-30, 2015, Austin, Texas, {USA.}},
+  593--600.
+
+\bibitem[\protect\citeauthoryear{Zhu and Iglesias}{2017}]{tkde/ZhuI17}
+Zhu, G., and Iglesias, C.~A.
+\newblock 2017.
+\newblock Computing semantic similarity of concepts in knowledge graphs.
+\newblock {\em {IEEE} Trans. Knowl. Data Eng.} 29(1):72--85.
+
+\end{thebibliography}
